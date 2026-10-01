@@ -5,9 +5,9 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system — "Timber mist panels"
- * Warm cream surfaces, deep pine ink, timber and ember accents.
- * Cormorant Garamond display serif over Work Sans body.
+ * Design system — Cliffside
+ * Warm ivory surfaces, deep forest green ink, copper used sparingly.
+ * Cormorant Garamond display serif over Manrope body.
  */
 
 @theme inline {
@@ -39,78 +39,59 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* Timber mist palette */
+  /* Cliffside palette */
+  --color-forest: var(--forest);
+  --color-forest-deep: var(--forest-deep);
+  --color-sage: var(--sage);
+  --color-sage-deep: var(--sage-deep);
+  --color-copper: var(--copper);
+  --color-copper-hover: var(--copper-hover);
+  --color-copper-deep: var(--copper-deep);
+  --color-ivory: var(--ivory);
   --color-cream: var(--cream);
-  --color-cream-deep: var(--cream-deep);
-  --color-pine: var(--pine);
-  --color-pine-deep: var(--pine-deep);
-  --color-timber: var(--timber);
-  --color-timber-deep: var(--timber-deep);
+  --color-charcoal: var(--charcoal);
   --color-stone: var(--stone);
-  --color-ash: var(--ash);
-  --color-ember: var(--ember);
-  --color-moss: var(--moss);
 
   --font-display: "Cormorant Garamond", Georgia, serif;
-  --font-sans: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 0.875rem;
 
-  --cream: oklch(0.947 0.014 95);
-  --cream-deep: oklch(0.905 0.02 92);
-  --pine: oklch(0.317 0.026 163);
-  --pine-deep: oklch(0.244 0.026 168);
-  --timber: oklch(0.483 0.077 55);
-  --timber-deep: oklch(0.372 0.06 52);
-  --stone: oklch(0.7 0.022 90);
-  --ash: oklch(0.415 0.014 75);
-  --ember: oklch(0.6 0.125 45);
-  --moss: oklch(0.548 0.04 132);
+  --forest: #23372d;
+  --forest-deep: #1a2a22;
+  --sage: #7c8b76;
+  /* Sage darkened for small text on ivory (AA contrast). */
+  --sage-deep: #5f6e5a;
+  --copper: #b66a3c;
+  --copper-hover: #a65c30;
+  /* Copper darkened for small text on ivory/cream (AA contrast). */
+  --copper-deep: #9a5530;
+  --ivory: #f6f2ea;
+  --cream: #ede6d9;
+  --charcoal: #252824;
+  --stone: #d3c9b9;
 
-  --background: var(--cream);
-  --foreground: var(--pine-deep);
-  --card: var(--cream);
-  --card-foreground: var(--pine-deep);
-  --popover: var(--cream);
-  --popover-foreground: var(--pine-deep);
-  --primary: var(--pine);
-  --primary-foreground: var(--cream);
-  --secondary: var(--cream-deep);
-  --secondary-foreground: var(--pine-deep);
-  --muted: var(--cream-deep);
-  --muted-foreground: var(--ash);
-  --accent: var(--cream-deep);
-  --accent-foreground: var(--pine-deep);
+  --background: var(--ivory);
+  --foreground: var(--charcoal);
+  --card: #fbf9f5;
+  --card-foreground: var(--charcoal);
+  --popover: #fbf9f5;
+  --popover-foreground: var(--charcoal);
+  --primary: var(--forest);
+  --primary-foreground: var(--ivory);
+  --secondary: var(--cream);
+  --secondary-foreground: var(--forest);
+  --muted: var(--cream);
+  --muted-foreground: #5c5f58;
+  --accent: var(--cream);
+  --accent-foreground: var(--forest);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.415 0.014 75 / 0.18);
-  --input: oklch(0.415 0.014 75 / 0.22);
-  --ring: var(--timber);
-}
-
-/* The site ships light-only; mirror the warm light theme in dark mode. */
-.dark {
-  --background: var(--cream);
-  --foreground: var(--pine-deep);
-  --card: var(--cream);
-  --card-foreground: var(--pine-deep);
-  --popover: var(--cream);
-  --popover-foreground: var(--pine-deep);
-  --primary: var(--pine);
-  --primary-foreground: var(--cream);
-  --secondary: var(--cream-deep);
-  --secondary-foreground: var(--pine-deep);
-  --muted: var(--cream-deep);
-  --muted-foreground: var(--ash);
-  --accent: var(--cream-deep);
-  --accent-foreground: var(--pine-deep);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.415 0.014 75 / 0.18);
-  --input: oklch(0.415 0.014 75 / 0.22);
-  --ring: var(--timber);
+  --border: var(--stone);
+  --input: var(--stone);
+  --ring: var(--copper);
 }
 
 @layer base {
@@ -118,34 +99,90 @@
     border-color: var(--color-border);
   }
 
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-}
 
-/* Scroll reveal — quiet rise, progressive enhancement only */
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    color: var(--color-forest);
+    text-wrap: balance;
   }
-  to {
-    opacity: 1;
-    transform: none;
+
+  :focus-visible {
+    outline: 2px solid var(--color-copper);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
 .eyebrow {
-  letter-spacing: 0.24em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
 }
 
-@supports (animation-timeline: view()) {
-  .reveal {
-    opacity: 0;
-    animation: rise 0.9s ease both;
-    animation-timeline: view();
-    animation-range: entry 8% cover 42%;
+/* Scroll reveal — toggled by <Reveal>; content stays visible without JS. */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Horizontal swipe rows (reviews, mobile gallery) */
+.snap-row {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.snap-row::-webkit-scrollbar {
+  display: none;
+}
+.snap-row > * {
+  scroll-snap-align: start;
+}
+
+@keyframes hero-zoom {
+  from {
+    transform: scale(1.08);
   }
+  to {
+    transform: scale(1);
+  }
+}
+.hero-zoom {
+  animation: hero-zoom 2.4s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
