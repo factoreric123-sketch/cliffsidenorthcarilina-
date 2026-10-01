@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { galleryCategories, galleryPhotos, imageUrl, type Photo } from "@/content/photos";
 import { cn } from "@/lib/utils";
 
-import { buttonStyles, Container, Img, Reveal, SectionHeading } from "./primitives";
+import { Img } from "./primitives";
 
 type Category = (typeof galleryCategories)[number];
 
@@ -25,7 +25,7 @@ function PhotoButton({
       type="button"
       onClick={onClick}
       aria-label={`View photo: ${photo.alt}`}
-      className={cn("group relative block overflow-hidden rounded-2xl bg-cream", className)}
+      className={cn("group relative block overflow-hidden rounded-lg bg-cream", className)}
     >
       <Img
         photo={photo}
@@ -116,7 +116,7 @@ export function Lightbox({
               <button
                 type="button"
                 onClick={() => setIndex(null)}
-                className="inline-flex h-11 items-center gap-2 rounded-full px-3 text-sm font-semibold hover:bg-white/10"
+                className="inline-flex h-11 items-center gap-2 rounded-lg px-3 text-sm font-semibold hover:bg-white/10"
               >
                 <Grid2x2 className="size-4" aria-hidden="true" />
                 All photos
@@ -126,12 +126,12 @@ export function Lightbox({
             )}
             {current && (
               <p className="ml-auto text-sm tabular-nums text-ivory/70" aria-live="polite">
-                {index! + 1} / {list.length}
+                {index! + 1} of {list.length}
               </p>
             )}
             <Dialog.Close
               className={cn(
-                "grid size-11 place-items-center rounded-full hover:bg-white/10",
+                "grid size-11 place-items-center rounded-lg hover:bg-white/10",
                 !current && "ml-auto",
               )}
               aria-label="Close gallery"
@@ -158,7 +158,7 @@ export function Lightbox({
                   key={current.src}
                   src={imageUrl(current.src, 2200)}
                   alt={current.alt}
-                  className="max-h-full max-w-full animate-in object-contain fade-in-0 duration-500 sm:rounded-lg"
+                  className="max-h-full max-w-full object-contain sm:rounded-lg"
                 />
               </div>
               <p className="px-5 py-4 text-center text-sm text-ivory/75 sm:pb-6">
@@ -169,7 +169,7 @@ export function Lightbox({
                 type="button"
                 onClick={() => step(-1)}
                 aria-label="Previous photo"
-                className="absolute top-1/2 left-3 hidden size-12 -translate-y-1/2 place-items-center rounded-full bg-white/10 transition-colors hover:bg-white/20 sm:grid"
+                className="absolute top-1/2 left-3 hidden size-12 -translate-y-1/2 place-items-center rounded-lg bg-white/10 transition-colors hover:bg-white/20 sm:grid"
               >
                 <ChevronLeft className="size-6" />
               </button>
@@ -177,7 +177,7 @@ export function Lightbox({
                 type="button"
                 onClick={() => step(1)}
                 aria-label="Next photo"
-                className="absolute top-1/2 right-3 hidden size-12 -translate-y-1/2 place-items-center rounded-full bg-white/10 transition-colors hover:bg-white/20 sm:grid"
+                className="absolute top-1/2 right-3 hidden size-12 -translate-y-1/2 place-items-center rounded-lg bg-white/10 transition-colors hover:bg-white/20 sm:grid"
               >
                 <ChevronRight className="size-6" />
               </button>
@@ -187,7 +187,7 @@ export function Lightbox({
                   type="button"
                   onClick={() => step(-1)}
                   aria-label="Previous photo"
-                  className="grid size-12 place-items-center rounded-full bg-white/10"
+                  className="grid size-12 place-items-center rounded-lg bg-white/10"
                 >
                   <ArrowLeft className="size-5" />
                 </button>
@@ -195,7 +195,7 @@ export function Lightbox({
                   type="button"
                   onClick={() => step(1)}
                   aria-label="Next photo"
-                  className="grid size-12 place-items-center rounded-full bg-white/10"
+                  className="grid size-12 place-items-center rounded-lg bg-white/10"
                 >
                   <ArrowLeft className="size-5 rotate-180" />
                 </button>
@@ -222,7 +222,7 @@ export function Lightbox({
                       aria-selected={category === c}
                       onClick={() => setCategory(c)}
                       className={cn(
-                        "shrink-0 rounded-full border px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors",
+                        "shrink-0 rounded-lg border px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors",
                         category === c
                           ? "border-ivory bg-ivory text-forest"
                           : "border-white/20 text-ivory/80 hover:border-white/50 hover:text-ivory",
@@ -236,26 +236,15 @@ export function Lightbox({
               <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:px-6">
                 <ul className="mx-auto grid max-w-6xl grid-cols-2 gap-2 sm:gap-3 md:grid-cols-3">
                   {list.map((p, i) => (
-                    <li
-                      key={p.src}
-                      className={cn(
-                        "animate-in fade-in-0 duration-500",
-                        // Every fifth photo spans wide for rhythm.
-                        i % 5 === 0 && "col-span-2",
-                      )}
-                    >
+                    <li key={p.src}>
                       <PhotoButton
                         photo={p}
                         onClick={() => {
                           setCameFromGrid(true);
                           setIndex(i);
                         }}
-                        sizes={
-                          i % 5 === 0
-                            ? "(min-width: 768px) 66vw, 100vw"
-                            : "(min-width: 768px) 33vw, 50vw"
-                        }
-                        className={cn("w-full", i % 5 === 0 ? "aspect-[16/9]" : "aspect-[4/3]")}
+                        sizes="(min-width: 768px) 33vw, 50vw"
+                        className="aspect-[3/2] w-full"
                       />
                     </li>
                   ))}
@@ -266,93 +255,5 @@ export function Lightbox({
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
-  );
-}
-
-export function Gallery() {
-  const [open, setOpen] = useState(false);
-  const [startIndex, setStartIndex] = useState<number | null>(null);
-  const [slide, setSlide] = useState(0);
-
-  const openAt = (i: number | null) => {
-    setStartIndex(i);
-    setOpen(true);
-  };
-
-  const featured = galleryPhotos.slice(0, 5);
-  const mobileSlides = galleryPhotos.slice(0, 8);
-
-  return (
-    <section id="gallery" aria-labelledby="gallery-title" className="py-24 sm:py-32">
-      <Container>
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-          <SectionHeading id="gallery-title" eyebrow="Gallery" title="A Closer Look" />
-          <Reveal className="hidden sm:block">
-            <a href="/cliffside" className={cn(buttonStyles.base, buttonStyles.outline)}>
-              <Grid2x2 className="size-4" aria-hidden="true" />
-              View All Photos
-            </a>
-          </Reveal>
-        </div>
-
-        {/* Desktop/tablet mosaic: one feature + four supporting */}
-        <Reveal className="mt-12 hidden h-[min(70vh,640px)] grid-cols-4 grid-rows-2 gap-3 md:grid">
-          {featured.map((p, i) => (
-            <PhotoButton
-              key={p.src}
-              photo={p}
-              onClick={() => openAt(i)}
-              sizes={i === 0 ? "50vw" : "25vw"}
-              className={cn(i === 0 && "col-span-2 row-span-2")}
-            />
-          ))}
-        </Reveal>
-      </Container>
-
-      {/* Phone: swipeable full-bleed carousel */}
-      <div className="mt-10 md:hidden">
-        <ul
-          className="snap-row gap-3 scroll-px-5 px-5"
-          onScroll={(e) => {
-            const el = e.currentTarget;
-            const w = (el.firstElementChild as HTMLElement | null)?.offsetWidth ?? 1;
-            setSlide(Math.round(el.scrollLeft / (w + 12)));
-          }}
-        >
-          {mobileSlides.map((p, i) => (
-            <li key={p.src} className="w-[86%] shrink-0">
-              <PhotoButton
-                photo={p}
-                onClick={() => openAt(i)}
-                sizes="86vw"
-                className="aspect-[4/5] w-full"
-              />
-            </li>
-          ))}
-        </ul>
-        <div className="mt-5 flex items-center justify-between px-5">
-          <div className="flex gap-1.5" aria-hidden="true">
-            {mobileSlides.map((p, i) => (
-              <span
-                key={p.src}
-                className={cn(
-                  "h-1.5 rounded-full transition-all duration-300",
-                  i === slide ? "w-5 bg-forest" : "w-1.5 bg-stone",
-                )}
-              />
-            ))}
-          </div>
-          <a
-            href="/cliffside"
-            className={cn(buttonStyles.base, buttonStyles.outline, "px-5 py-3 text-sm")}
-          >
-            <Grid2x2 className="size-4" aria-hidden="true" />
-            View All Photos
-          </a>
-        </div>
-      </div>
-
-      <Lightbox open={open} onOpenChange={setOpen} startIndex={startIndex} />
-    </section>
   );
 }

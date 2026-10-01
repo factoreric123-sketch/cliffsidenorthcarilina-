@@ -5,28 +5,14 @@ import { useEffect, useState } from "react";
 import { nav, site } from "@/content/site";
 import { cn } from "@/lib/utils";
 
-import { buttonStyles, Container } from "./primitives";
+import { button, Container } from "./primitives";
 
-function Logo() {
-  return (
-    <a
-      href="/#home"
-      className="group flex flex-col leading-none"
-      aria-label="Cliffside — back to top"
-    >
-      <span className="font-display text-[1.6rem] font-semibold tracking-[0.18em] text-white">
-        CLIFFSIDE
-      </span>
-      <span className="mt-1 text-[0.62rem] font-medium tracking-[0.32em] text-white/75 uppercase">
-        {site.area}
-      </span>
-    </a>
-  );
-}
-
-export function Header({ solid = false }: { solid?: boolean }) {
+/**
+ * Transparent over the home hero, solid forest once scrolled (or always, with `solid`).
+ * `current` marks the nav item for the page being viewed.
+ */
+export function Header({ solid = false, current }: { solid?: boolean; current?: string }) {
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState(solid ? "" : "/#home");
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -36,45 +22,27 @@ export function Header({ solid = false }: { solid?: boolean }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Highlight the nav link for the section currently in view.
-  useEffect(() => {
-    const sections = nav
-      .map((n) => document.getElementById(n.href.split("#")[1] ?? ""))
-      .filter((el): el is HTMLElement => el !== null);
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) if (e.isIntersecting) setActive(`/#${e.target.id}`);
-      },
-      { rootMargin: "-45% 0px -50% 0px" },
-    );
-    sections.forEach((s) => io.observe(s));
-    return () => io.disconnect();
-  }, []);
-
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-40 transition-[background-color,box-shadow,padding] duration-500",
-        scrolled || solid
-          ? "bg-forest/97 py-3 shadow-[0_10px_30px_-20px_rgba(0,0,0,0.6)]"
-          : "bg-gradient-to-b from-black/40 to-transparent py-5",
+        "fixed inset-x-0 top-0 z-40 transition-colors duration-300",
+        scrolled || solid ? "bg-forest" : "bg-transparent",
       )}
     >
-      <Container className="flex items-center justify-between gap-6">
-        <Logo />
+      <Container className="flex h-16 items-center justify-between gap-6 sm:h-18">
+        <a href="/" className="leading-none text-white">
+          <span className="font-display text-2xl font-semibold tracking-[0.14em]">CLIFFSIDE</span>
+          <span className="sr-only">, home</span>
+        </a>
 
         <nav aria-label="Primary" className="hidden lg:block">
-          <ul className="flex items-center gap-5 xl:gap-7">
+          <ul className="flex items-center gap-7">
             {nav.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}
-                  aria-current={active === item.href ? "true" : undefined}
-                  className={cn(
-                    "relative py-2 text-[0.82rem] font-medium tracking-wide whitespace-nowrap text-white/80 transition-colors hover:text-white",
-                    "after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-copper after:transition-transform after:duration-300 hover:after:scale-x-100",
-                    active === item.href && "text-white after:scale-x-100",
-                  )}
+                  aria-current={current === item.href ? "page" : undefined}
+                  className="text-[0.9375rem] font-medium text-white/85 underline-offset-8 transition-colors hover:text-white hover:underline aria-[current=page]:text-white aria-[current=page]:underline"
                 >
                   {item.label}
                 </a>
@@ -83,56 +51,46 @@ export function Header({ solid = false }: { solid?: boolean }) {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          {/* Hidden while the hero's own button is on screen: one primary action per view. */}
           <a
-            href="/#availability"
-            className={cn(
-              buttonStyles.base,
-              buttonStyles.copper,
-              "px-4 py-2.5 text-sm whitespace-nowrap sm:px-5",
-            )}
+            href={site.bookingUrl}
+            className={cn(button.primary, "hidden py-2.5", (scrolled || solid) && "sm:inline-flex")}
           >
-            <span className="sm:hidden">Book</span>
-            <span className="hidden sm:inline">Book Your Stay</span>
+            Check availability
           </a>
 
           <Dialog.Root open={open} onOpenChange={setOpen}>
             <Dialog.Trigger
-              className="grid size-11 place-items-center rounded-full text-white transition-colors hover:bg-white/10 lg:hidden"
+              className="-mr-2 grid size-11 place-items-center rounded-lg text-white hover:bg-white/10 lg:hidden"
               aria-label="Open menu"
             >
               <Menu className="size-6" strokeWidth={1.5} />
             </Dialog.Trigger>
             <Dialog.Portal>
               <Dialog.Overlay className="fixed inset-0 z-50 bg-black/40 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
-              <Dialog.Content className="fixed inset-y-0 right-0 z-50 flex w-full max-w-sm flex-col bg-forest px-7 pt-6 pb-[max(2rem,env(safe-area-inset-bottom))] text-ivory shadow-2xl duration-500 data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:animate-in data-[state=open]:slide-in-from-right">
-                <div className="flex items-center justify-between">
-                  <Dialog.Title className="font-display text-2xl font-semibold tracking-[0.18em] text-ivory">
+              <Dialog.Content className="fixed inset-y-0 right-0 z-50 flex w-full max-w-sm flex-col bg-forest px-6 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] text-ivory shadow-xl duration-300 data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:animate-in data-[state=open]:slide-in-from-right">
+                <div className="flex h-12 items-center justify-between">
+                  <Dialog.Title className="font-display text-2xl font-semibold tracking-[0.14em] text-ivory">
                     CLIFFSIDE
                   </Dialog.Title>
                   <Dialog.Close
-                    className="grid size-11 place-items-center rounded-full hover:bg-white/10"
+                    className="-mr-2 grid size-11 place-items-center rounded-lg hover:bg-white/10"
                     aria-label="Close menu"
                   >
                     <X className="size-6" strokeWidth={1.5} />
                   </Dialog.Close>
                 </div>
                 <Dialog.Description className="sr-only">Site navigation</Dialog.Description>
-                <nav aria-label="Mobile" className="mt-10 flex-1">
-                  <ul className="space-y-1">
-                    {nav.map((item, i) => (
-                      <li
-                        key={item.href}
-                        className="animate-in fade-in-0 slide-in-from-right-4 fill-mode-both duration-500"
-                        style={{ animationDelay: `${120 + i * 45}ms` }}
-                      >
+                <nav aria-label="Mobile" className="mt-6 flex-1">
+                  <ul>
+                    {nav.map((item) => (
+                      <li key={item.href}>
                         <a
                           href={item.href}
                           onClick={() => setOpen(false)}
-                          className={cn(
-                            "block border-b border-white/10 py-4 font-display text-3xl transition-colors hover:text-stone",
-                            active === item.href ? "text-white" : "text-ivory/80",
-                          )}
+                          aria-current={current === item.href ? "page" : undefined}
+                          className="block border-b border-white/15 py-4 text-lg font-medium text-ivory/90 hover:text-white aria-[current=page]:text-white"
                         >
                           {item.label}
                         </a>
@@ -140,15 +98,11 @@ export function Header({ solid = false }: { solid?: boolean }) {
                     ))}
                   </ul>
                 </nav>
-                <a
-                  href="/#availability"
-                  onClick={() => setOpen(false)}
-                  className={cn(buttonStyles.base, buttonStyles.copper, "w-full py-4")}
-                >
-                  Book Your Stay
+                <a href={site.bookingUrl} className={cn(button.primary, "w-full py-3.5")}>
+                  Check availability
                 </a>
-                <p className="mt-4 text-center text-xs tracking-wide text-ivory/60">
-                  {site.summary}
+                <p className="type-caption mt-3 text-center text-ivory/75">
+                  Booking opens on leatherwoodmountains.com
                 </p>
               </Dialog.Content>
             </Dialog.Portal>

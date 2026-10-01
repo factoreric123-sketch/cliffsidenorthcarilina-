@@ -1,17 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { Footer } from "@/components/site/Closing";
+import { Footer, MobileBookingBar } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { PropertyPage } from "@/components/site/Property";
 
 export const Route = createFileRoute("/cliffside")({
   head: () => ({
     meta: [
-      { title: "Photos & Details — Cliffside | Leatherwood Mountains, NC" },
+      { title: "Photos — Cliffside, Leatherwood Mountains, NC" },
       {
         name: "description",
         content:
-          "Browse all photos of Cliffside, a 2-bedroom, 2-bath pet-friendly cabin with a private hot tub in Leatherwood Mountains Resort, NC.",
+          "All 41 photos of Cliffside, a two-bedroom log cabin with a private hot tub inside Leatherwood Mountains Resort, NC.",
       },
     ],
   }),
@@ -21,9 +21,10 @@ export const Route = createFileRoute("/cliffside")({
 function CliffsidePage() {
   return (
     <>
-      <Header solid />
+      <Header solid current="/cliffside" />
       <PropertyPage />
       <Footer />
+      <MobileBookingBar />
     </>
   );
 }

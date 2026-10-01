@@ -1,39 +1,20 @@
 import * as TabsPrimitive from "@radix-ui/react-tabs";
-import {
-  Bath,
-  BedDouble,
-  ChevronLeft,
-  ChevronRight,
-  Expand,
-  MapPin,
-  PawPrint,
-  Ruler,
-  Users,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Expand } from "lucide-react";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 
 import { galleryPhotos, imageSrcSet, imageUrl } from "@/content/photos";
-import { description, reviews, rooms } from "@/content/site";
+import { site } from "@/content/site";
 import { cn } from "@/lib/utils";
 
-import { AmenityCategories, AmenityHighlights } from "./Amenities";
-import { LocationList, RegionMap } from "./Area";
-import { BookingForm } from "./Booking";
-import { Lightbox } from "./Gallery";
-import { buttonStyles, Container } from "./primitives";
-import { ReviewCard } from "./Reviews";
+import { Lightbox } from "./Lightbox";
+import { Container } from "./primitives";
+import { AboutText, AmenityList, LocationDetails, PolicyList, RoomList } from "./Sections";
 
-const stats = [
-  { Icon: BedDouble, label: "2 Bedrooms" },
-  { Icon: Bath, label: "2 Bathrooms" },
-  { Icon: Users, label: "Sleeps 4" },
-  { Icon: Ruler, label: "2,279 sq. ft." },
-  { Icon: MapPin, label: "Leatherwood Mountains, NC" },
-  { Icon: PawPrint, label: "Pet Friendly" },
-];
-
-const tabs = ["Description", "Amenities", "Reviews", "Calendar", "Location"] as const;
+const tabs = ["Description", "Amenities", "Location", "House rules"] as const;
 type Tab = (typeof tabs)[number];
+
+const iconButton =
+  "grid size-11 place-items-center rounded-lg bg-ivory/90 text-forest transition-colors hover:bg-ivory";
 
 /** Large photo with arrows, swipe, and a scrollable strip of every thumbnail. */
 function PhotoViewer() {
@@ -82,39 +63,31 @@ function PhotoViewer() {
           if (Math.abs(dx) > 45) go(dx < 0 ? 1 : -1);
           touchX.current = null;
         }}
-        className="group relative overflow-hidden rounded-2xl bg-forest-deep sm:rounded-3xl"
+        className="relative overflow-hidden rounded-lg bg-forest-deep"
       >
-        <div className="aspect-[4/3] w-full sm:aspect-[3/2] sm:max-h-[calc(100svh-17rem)] sm:min-h-[22rem]">
+        <div className="aspect-[3/2] w-full sm:max-h-[calc(100svh-15rem)] sm:min-h-[22rem]">
           <img
-            key={photo.src}
             src={imageUrl(photo.src, 1920)}
             srcSet={imageSrcSet(photo.src)}
-            sizes="(min-width: 1280px) 1216px, 100vw"
+            sizes="(min-width: 1152px) 1088px, 100vw"
             alt={photo.alt}
             fetchPriority={index === 0 ? "high" : "auto"}
-            className="h-full w-full animate-in object-cover fade-in-0 duration-500"
+            className="h-full w-full object-cover"
           />
         </div>
-
         <button
           type="button"
           onClick={() => setFullscreen(true)}
           aria-label="View full screen"
-          className="absolute top-3 left-3 grid size-11 place-items-center rounded-full bg-black/40 text-white transition-colors hover:bg-black/60 sm:top-4 sm:left-4"
+          className={cn(iconButton, "absolute top-3 right-3")}
         >
           <Expand className="size-5" strokeWidth={1.75} />
         </button>
-        <p
-          aria-live="polite"
-          className="absolute right-3 bottom-3 rounded-full bg-black/45 px-3 py-1.5 text-xs font-semibold text-white tabular-nums sm:right-4 sm:bottom-4"
-        >
-          {index + 1} / {count}
-        </p>
         <button
           type="button"
           onClick={() => go(-1)}
           aria-label="Previous photo"
-          className="absolute top-1/2 left-3 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-forest shadow-lg transition hover:bg-white sm:left-4 sm:size-12"
+          className={cn(iconButton, "absolute top-1/2 left-3 -translate-y-1/2")}
         >
           <ChevronLeft className="size-6" />
         </button>
@@ -122,13 +95,18 @@ function PhotoViewer() {
           type="button"
           onClick={() => go(1)}
           aria-label="Next photo"
-          className="absolute top-1/2 right-3 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-white/85 text-forest shadow-lg transition hover:bg-white sm:right-4 sm:size-12"
+          className={cn(iconButton, "absolute top-1/2 right-3 -translate-y-1/2")}
         >
           <ChevronRight className="size-6" />
         </button>
       </div>
 
-      <p className="mt-3 text-sm text-muted-foreground">{photo.alt}</p>
+      <p className="type-caption mt-2 flex justify-between gap-4">
+        <span>{photo.alt}</span>
+        <span aria-live="polite" className="shrink-0 tabular-nums">
+          {index + 1} of {count}
+        </span>
+      </p>
 
       <div ref={stripRef} className="snap-row mt-3 gap-2 pb-1" aria-label="Photo thumbnails">
         {galleryPhotos.map((p, i) => (
@@ -139,10 +117,8 @@ function PhotoViewer() {
             aria-label={`Show photo ${i + 1}: ${p.alt}`}
             aria-current={i === index ? "true" : undefined}
             className={cn(
-              "relative aspect-[3/2] w-24 shrink-0 overflow-hidden rounded-lg transition-opacity duration-300 sm:w-32 lg:w-36",
-              i === index
-                ? "opacity-100 ring-2 ring-copper ring-offset-2 ring-offset-ivory"
-                : "opacity-60 hover:opacity-100",
+              "aspect-[3/2] w-24 shrink-0 overflow-hidden rounded-lg border-2 sm:w-32",
+              i === index ? "border-copper" : "border-transparent opacity-70 hover:opacity-100",
             )}
           >
             <img
@@ -162,120 +138,44 @@ function PhotoViewer() {
 }
 
 export function PropertyPage() {
-  const [tab, setTab] = useState<Tab>("Description");
-  const tabsRef = useRef<HTMLDivElement>(null);
-
-  const openCalendar = () => {
-    setTab("Calendar");
-    // Wait for the tab panel to render, then scroll so the tabs sit below the fixed header.
-    setTimeout(() => {
-      const el = tabsRef.current;
-      if (el)
-        window.scrollTo({
-          top: el.getBoundingClientRect().top + window.scrollY - 96,
-          behavior: "smooth",
-        });
-    }, 0);
-  };
-
   return (
-    <main id="main" className="pt-24 pb-24 sm:pt-28">
+    <main id="main" className="pt-22 pb-20 sm:pt-26">
       <Container>
         <PhotoViewer />
 
-        <div className="mt-12 text-center">
-          <h1 className="text-[clamp(2.75rem,6vw,4.5rem)] leading-none font-medium">Cliffside</h1>
-          <ul className="mx-auto mt-6 flex max-w-4xl flex-wrap items-center justify-center gap-x-5 gap-y-3 text-[0.95rem] text-charcoal">
-            {stats.map(({ Icon, label }) => (
-              <li key={label} className="flex items-center gap-2">
-                <Icon className="size-[1.15rem] text-copper" strokeWidth={1.6} aria-hidden="true" />
-                {label}
-              </li>
-            ))}
-          </ul>
-          <button
-            type="button"
-            onClick={openCalendar}
-            className={cn(buttonStyles.base, buttonStyles.copper, "mt-8 px-8")}
-          >
-            Check Availability
-          </button>
+        <div className="mt-10 border-b border-stone pb-8">
+          <h1 className="type-title">Cliffside</h1>
+          <p className="mt-3">2 bedrooms · 2 bathrooms · Sleeps 4 · 2,279 sq ft · Pets welcome</p>
+          <p className="type-caption mt-1">{site.region}</p>
         </div>
 
-        <TabsPrimitive.Root
-          ref={tabsRef}
-          value={tab}
-          onValueChange={(v) => setTab(v as Tab)}
-          className="mt-14"
-        >
-          <TabsPrimitive.List
-            aria-label="Property details"
-            className="snap-row gap-1 border-b border-stone"
-          >
+        <TabsPrimitive.Root defaultValue="Description" className="mt-8">
+          <TabsPrimitive.List aria-label="Cabin details" className="snap-row border-b border-stone">
             {tabs.map((t) => (
               <TabsPrimitive.Trigger
                 key={t}
                 value={t}
-                className="relative shrink-0 px-3 py-3.5 text-sm sm:text-[0.95rem] font-semibold whitespace-nowrap text-muted-foreground transition-colors after:absolute after:inset-x-3 after:-bottom-px after:h-0.5 after:scale-x-0 after:bg-copper after:transition-transform hover:text-forest data-[state=active]:text-forest data-[state=active]:after:scale-x-100 sm:px-6"
+                className="-mb-px shrink-0 border-b-2 border-transparent px-3 py-3 text-[0.9375rem] font-semibold whitespace-nowrap text-muted-foreground transition-colors first:pl-0 hover:text-forest data-[state=active]:border-copper data-[state=active]:text-forest sm:px-5"
               >
                 {t}
               </TabsPrimitive.Trigger>
             ))}
           </TabsPrimitive.List>
 
-          <TabsPrimitive.Content value="Description" className="pt-10 outline-none">
-            <div className="max-w-3xl space-y-5 text-[1.05rem] leading-[1.8] text-muted-foreground">
-              {description.map((p) => (
-                <p key={p}>{p}</p>
-              ))}
-            </div>
-            <div className="mt-12 grid gap-5 sm:grid-cols-2">
-              {rooms.map((room) => (
-                <div key={room.title} className="rounded-2xl border border-stone/80 bg-card p-7">
-                  <p className="eyebrow text-copper-deep">{room.eyebrow}</p>
-                  <h2 className="mt-2 text-3xl font-medium">{room.title}</h2>
-                  <ul className="mt-4 space-y-2 text-[0.95rem] text-charcoal">
-                    {room.features.map((f) => (
-                      <li key={f} className="flex items-baseline gap-2.5">
-                        <span
-                          className="size-1.5 shrink-0 -translate-y-0.5 rounded-full bg-sage"
-                          aria-hidden="true"
-                        />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+          <TabsPrimitive.Content value="Description" className="pt-8 outline-none">
+            <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
+              <AboutText />
+              <RoomList />
             </div>
           </TabsPrimitive.Content>
-
-          <TabsPrimitive.Content value="Amenities" className="pt-10 outline-none">
-            <AmenityHighlights />
-            <AmenityCategories className="mt-10" />
+          <TabsPrimitive.Content value="Amenities" className="pt-8 outline-none">
+            <AmenityList />
           </TabsPrimitive.Content>
-
-          <TabsPrimitive.Content value="Reviews" className="pt-10 outline-none">
-            <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {reviews.map((r, i) => (
-                <li key={i}>
-                  <ReviewCard review={r} />
-                </li>
-              ))}
-            </ul>
+          <TabsPrimitive.Content value="Location" className="pt-8 outline-none">
+            <LocationDetails />
           </TabsPrimitive.Content>
-
-          <TabsPrimitive.Content value="Calendar" className="pt-10 outline-none">
-            <BookingForm className="mx-auto max-w-4xl border border-stone/80 shadow-none" />
-          </TabsPrimitive.Content>
-
-          <TabsPrimitive.Content value="Location" className="pt-10 outline-none">
-            <div className="grid items-center gap-10 lg:grid-cols-12">
-              <LocationList className="lg:col-span-5" />
-              <div className="overflow-hidden rounded-3xl border border-stone/80 lg:col-span-7">
-                <RegionMap />
-              </div>
-            </div>
+          <TabsPrimitive.Content value="House rules" className="pt-8 outline-none">
+            <PolicyList />
           </TabsPrimitive.Content>
         </TabsPrimitive.Root>
       </Container>

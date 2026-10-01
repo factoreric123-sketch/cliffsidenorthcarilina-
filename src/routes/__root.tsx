@@ -79,14 +79,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { name: "theme-color", content: "#23372D" },
-      { title: "Cliffside — Blue Ridge Mountain Cabin" },
+      { title: "Cliffside — Log cabin in Leatherwood Mountains, NC" },
       {
         name: "description",
         content:
           "A private 2BR/2BA mountain cabin in Leatherwood Mountains Resort, NC. Sleeps 4, pet friendly, private hot tub and long-range Blue Ridge views.",
       },
       { name: "author", content: "Cliffside" },
-      { property: "og:title", content: "Cliffside — Blue Ridge Mountain Cabin" },
+      { property: "og:title", content: "Cliffside — Log cabin in Leatherwood Mountains, NC" },
       {
         property: "og:description",
         content:
@@ -102,7 +102,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.gstatic.com",
         crossOrigin: "anonymous",
       },
-      { rel: "preconnect", href: "https://images.unsplash.com" },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap",
@@ -113,8 +112,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
-    // Enables scroll-reveal styles only when JS runs, so content is never hidden without it.
-    scripts: [{ children: "document.documentElement.classList.add('js')" }],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -124,7 +121,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <head>
         <HeadContent />
       </head>

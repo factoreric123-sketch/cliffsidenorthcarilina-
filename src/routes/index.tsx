@@ -1,34 +1,37 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { Amenities } from "@/components/site/Amenities";
-import { HighCountry, Leatherwood, Location } from "@/components/site/Area";
-import { Booking, MobileBookingBar } from "@/components/site/Booking";
-import { Faq, FinalCta, Footer, ImportantInfo, PetFriendly } from "@/components/site/Closing";
-import { Gallery } from "@/components/site/Gallery";
+import { Footer, MobileBookingBar } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
-import { Hero, QuickDetails } from "@/components/site/Hero";
-import { Reviews } from "@/components/site/Reviews";
-import { Experiences, Intro, TheCabin } from "@/components/site/Story";
+import { Hero } from "@/components/site/Hero";
+import {
+  About,
+  Amenities,
+  Cabin,
+  Faq,
+  HouseRules,
+  Location,
+  Resort,
+} from "@/components/site/Sections";
 import { imageUrl, photos } from "@/content/photos";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       {
-        title: "Cliffside — Blue Ridge Mountain Cabin | Leatherwood Mountains, NC",
+        title: "Cliffside — Log cabin in Leatherwood Mountains, NC",
       },
       {
         name: "description",
         content:
-          "Private 2-bedroom, 2-bath cabin for 4 in gated Leatherwood Mountains Resort, NC. Long-range Blue Ridge views, private hot tub, stone gas fireplace, pet friendly. About 30 minutes from Boone and Blowing Rock.",
+          "Cliffside is a two-bedroom, two-bath log cabin for up to 4 inside the gated Leatherwood Mountains Resort, NC. Private hot tub, stone gas fireplace, long-range Blue Ridge views, pets welcome. About 30 minutes from Boone and Blowing Rock.",
       },
-      { property: "og:title", content: "Cliffside — Blue Ridge Mountain Cabin" },
+      { property: "og:title", content: "Cliffside — Log cabin in Leatherwood Mountains, NC" },
       {
         property: "og:description",
         content:
-          "A private 2BR/2BA mountain cabin in Leatherwood Mountains Resort, NC. Sleeps 4, pet friendly, private hot tub and long-range Blue Ridge views.",
+          "Two-bedroom log cabin inside Leatherwood Mountains Resort, NC. Sleeps 4, private hot tub, pets welcome.",
       },
-      { property: "og:image", content: imageUrl(photos.mistyRidges.src, 1200) },
+      { property: "og:image", content: imageUrl(photos.mistyRidges.src, 1280) },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -41,28 +44,20 @@ function Index() {
     <>
       <a
         href="#main"
-        className="sr-only z-50 rounded-full bg-forest px-5 py-3 text-ivory focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
+        className="sr-only z-50 rounded-lg bg-forest px-4 py-2 text-ivory focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
       >
         Skip to content
       </a>
       <Header />
       <main id="main">
         <Hero />
-        <QuickDetails />
-        <Intro />
-        <Experiences />
-        <TheCabin />
+        <About />
+        <Cabin />
         <Amenities />
-        <Gallery />
-        <Leatherwood />
-        <HighCountry />
-        <Reviews />
-        <Booking />
-        <ImportantInfo />
-        <PetFriendly />
+        <Resort />
         <Location />
+        <HouseRules />
         <Faq />
-        <FinalCta />
       </main>
       <Footer />
       <MobileBookingBar />

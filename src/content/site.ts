@@ -1,451 +1,244 @@
-import {
-  AirVent,
-  Armchair,
-  Bath,
-  BedDouble,
-  BookOpen,
-  Car,
-  Coffee,
-  Compass,
-  DoorOpen,
-  Fence,
-  Fish,
-  Flame,
-  Footprints,
-  Goal,
-  LandPlot,
-  LifeBuoy,
-  MapPin,
-  Mountain,
-  MountainSnow,
-  PawPrint,
-  Route,
-  Ruler,
-  ShieldCheck,
-  Sofa,
-  Trees,
-  Tv,
-  Users,
-  UtensilsCrossed,
-  WashingMachine,
-  Waves,
-  Wifi,
-  type LucideIcon,
-} from "lucide-react";
-
 import { photos, type Photo } from "./photos";
+
+/*
+ * All site copy lives here. Sources:
+ * - Property facts, amenities, rules: the owner's brief and the Leatherwood Mountains listing
+ *   (https://leatherwoodmountains.com/vrp/unit/Cliffside-10-15).
+ * - Pet fee: the Leatherwood "Pet-friendly unit" graphic (public/images/cliffside/28.png).
+ * Don't add claims here without a source.
+ */
 
 export const site = {
   name: "Cliffside",
-  area: "Leatherwood Mountains",
   region: "Leatherwood Mountains, North Carolina",
-  summary: "2 Bedrooms · 2 Bathrooms · Sleeps 4 · Pet Friendly",
-  /**
-   * TODO: replace with the real booking inbox before launch.
-   * Every "Check Availability" request and the footer Contact link go here.
-   */
-  contactEmail: "bookings@example.com",
+  /** Bookings are made on the property manager's site. */
+  bookingUrl: "https://leatherwoodmountains.com/vrp/unit/Cliffside-10-15",
+  manager: "Leatherwood Mountains",
+  managerEmail: "info@leatherwoodmountains.com",
+  mapsUrl:
+    "https://www.google.com/maps/search/?api=1&query=Leatherwood+Mountains+Resort%2C+North+Carolina",
 };
-
-export const description = [
-  "Welcome to Cliffside, a private mountain cabin located in the gated Leatherwood Mountains Resort. Surrounded by the beauty of North Carolina's High Country, Cliffside combines peaceful seclusion, long-range Blue Ridge Mountain views, and the comforts of home.",
-  "Spend mornings overlooking the mountains, afternoons exploring the trails, and evenings relaxing in the private hot tub or beside the stone gas fireplace.",
-  "Whether you're planning a romantic getaway, a small family trip, or a mountain escape with your dog, Cliffside offers a comfortable and relaxing place to slow down.",
-];
 
 export const nav = [
-  { label: "Home", href: "/#home" },
-  { label: "The Cabin", href: "/#cabin" },
+  { label: "The cabin", href: "/#cabin" },
+  { label: "Photos", href: "/cliffside" },
   { label: "Amenities", href: "/#amenities" },
-  { label: "Gallery", href: "/#gallery" },
   { label: "Location", href: "/#location" },
-  { label: "Reviews", href: "/#reviews" },
-  { label: "Availability", href: "/#availability" },
+  { label: "Questions", href: "/#faq" },
 ];
 
-type IconItem = { Icon: LucideIcon; label: string };
-
-export const quickDetails: IconItem[] = [
-  { Icon: BedDouble, label: "2 Bedrooms" },
-  { Icon: Bath, label: "2 Bathrooms" },
-  { Icon: Users, label: "Sleeps 4" },
-  { Icon: Ruler, label: "2,279 sq. ft." },
-  { Icon: PawPrint, label: "Pet Friendly" },
-  { Icon: Waves, label: "Private Hot Tub" },
-  { Icon: Mountain, label: "Mountain Views" },
+export const about = [
+  "Cliffside is a two-story log cabin inside Leatherwood Mountains Resort, a gated community in North Carolina's High Country. From the deck and the covered porch you look out over long-range Blue Ridge views.",
+  "It's set up for a couple or a small family, and pets are welcome. The cabin has paved road access, so getting there is easy in any season.",
 ];
 
-export const experiences: { title: string; text: string; photo: Photo }[] = [
-  {
-    title: "Wake Up to Mountain Views",
-    text: "Enjoy long-range Blue Ridge Mountain views directly from the property.",
-    photo: photos.deckView,
-  },
-  {
-    title: "Relax in the Hot Tub",
-    text: "Unwind outdoors in your private hot tub after a day exploring the mountains.",
-    photo: photos.hotTubJets,
-  },
-  {
-    title: "Cozy Up by the Fire",
-    text: "Relax beside the cabin's beautiful stone gas fireplace.",
-    photo: photos.stoneFireplace,
-  },
-  {
-    title: "Explore Leatherwood",
-    text: "Enjoy hiking, horseback riding, fishing, tubing, swimming, and other activities inside the resort.",
-    photo: photos.horseback,
-  },
+export const facts: { term: string; detail: string }[] = [
+  { term: "Bedrooms", detail: "2: a king upstairs, a queen on the main level" },
+  { term: "Bathrooms", detail: "2 full" },
+  { term: "Sleeps", detail: "4" },
+  { term: "Size", detail: "2,279 sq ft" },
+  { term: "Pets", detail: "Welcome, $75 per pet, up to 2" },
+  { term: "Check-in / out", detail: "After 4:00 PM / before 11:00 AM" },
 ];
 
-export const rooms: {
-  eyebrow: string;
-  title: string;
-  intro: string;
-  features: string[];
-  photo: Photo;
-}[] = [
-  {
-    eyebrow: "Upper Level",
-    title: "Primary Suite",
-    intro: "A private retreat at the top of the cabin.",
-    features: [
-      "King bed",
-      "Double vanity",
-      "Walk-in shower",
-      "Two-person whirlpool tub",
-      "Private and comfortable atmosphere",
-    ],
-    photo: photos.primarySuite,
-  },
-  {
-    eyebrow: "Main Level",
-    title: "Guest Bedroom",
-    intro: "Comfortable, bright, and steps from everything.",
-    features: ["Queen bed", "Mountain views", "Convenient access to the main living areas"],
-    photo: photos.guestBedroom,
-  },
-  {
-    eyebrow: "Gather",
-    title: "Living Area",
-    intro: "Room to settle in after a day outdoors.",
-    features: [
-      "Spacious living room",
-      "Stone gas fireplace",
-      "Comfortable seating",
-      "Roku Smart TV",
-      "Mountain cabin atmosphere",
-    ],
-    photo: photos.livingFireplace,
-  },
-  {
-    eyebrow: "Cook & Dine",
-    title: "Kitchen & Dining",
-    intro: "Everything you need for slow breakfasts and long dinners.",
-    features: [
-      "Fully equipped kitchen",
-      "Dining table",
-      "Full-size appliances",
-      "Coffee makers",
-      "Everything needed for meals at the cabin",
-    ],
-    photo: photos.kitchen,
-  },
+export const floors: { title: string; rooms: { name: string; text: string }[]; photos: Photo[] }[] =
+  [
+    {
+      title: "Upper level",
+      rooms: [
+        {
+          name: "Primary suite",
+          text: "King bed, double vanity, walk-in shower, and a two-person whirlpool tub.",
+        },
+      ],
+      photos: [photos.primarySuite, photos.primaryBath],
+    },
+    {
+      title: "Main level",
+      rooms: [
+        {
+          name: "Living room",
+          text: "Set around a stone gas fireplace, with a Roku Smart TV and room for everyone to sit.",
+        },
+        {
+          name: "Kitchen and dining",
+          text: "Full-size appliances, a dishwasher, and both drip and single-serve coffee makers. The dining table is by the windows.",
+        },
+        {
+          name: "Guest bedroom",
+          text: "Queen bed and mountain views, a few steps from the living room and kitchen.",
+        },
+      ],
+      photos: [photos.livingFireplace, photos.kitchen, photos.dining, photos.guestBedroom],
+    },
+    {
+      title: "Porch and deck",
+      rooms: [
+        {
+          name: "Covered porch",
+          text: "The private hot tub, Adirondack chairs, a gas grill, and an outdoor dining table.",
+        },
+        { name: "Deck", text: "Uncovered, facing the mountains." },
+      ],
+      photos: [photos.hotTubView, photos.porchDining, photos.deckView],
+    },
+  ];
+
+export const amenityHighlights = [
+  "Private hot tub",
+  "Long-range mountain views",
+  "Stone gas fireplace",
+  "High-speed fiber optic Wi-Fi",
+  "Roku Smart TVs and DVD player",
+  "Washer and dryer",
+  "Central air and heating",
+  "Gas grill",
+  "Deck and covered porch",
+  "Paved road access",
+  "Gated resort community",
+  "Private entrance",
 ];
 
-export const amenityHighlights: IconItem[] = [
-  { Icon: Waves, label: "Private Hot Tub" },
-  { Icon: MountainSnow, label: "Long-Range Mountain Views" },
-  { Icon: Flame, label: "Stone Gas Fireplace" },
-  { Icon: Wifi, label: "High-Speed Fiber Optic Wi-Fi" },
-  { Icon: PawPrint, label: "Pet Friendly" },
-  { Icon: Car, label: "Paved Road Access" },
-  { Icon: ShieldCheck, label: "Gated Resort Community" },
-  { Icon: Fence, label: "Spacious Deck & Covered Porch" },
-  { Icon: UtensilsCrossed, label: "Outdoor Grill" },
-  { Icon: WashingMachine, label: "Washer & Dryer" },
-  { Icon: AirVent, label: "Central Air & Heating" },
-  { Icon: DoorOpen, label: "Private Entrance" },
-];
-
-export const amenityCategories: { Icon: LucideIcon; title: string; items: string[] }[] = [
+export const amenityGroups: { title: string; items: string[] }[] = [
   {
-    Icon: Coffee,
-    title: "Kitchen",
+    title: "Kitchen and dining",
     items: [
-      "Full Kitchen",
-      "Dining Room Table",
-      "Coffee Maker",
-      "Drip Coffee Maker",
-      "Single Serve Coffee Maker",
-      "Dishwasher",
-      "Refrigerator",
-      "Freezer",
-      "Oven",
-      "Stove",
+      "Full-size refrigerator and freezer",
+      "Oven and stove",
       "Microwave",
+      "Dishwasher",
       "Toaster",
-      "Dishes & Utensils",
-      "Baking Sheet",
-      "Wine Glasses",
+      "Drip coffee maker",
+      "Single-serve coffee maker",
+      "Dishes and utensils",
+      "Baking sheet",
+      "Wine glasses",
+      "Dining table",
     ],
   },
   {
-    Icon: Sofa,
-    title: "Living Room",
+    title: "Living room",
     items: [
-      "Living Room",
-      "Fireplace",
-      "Television",
-      "Air Conditioning",
+      "Stone gas fireplace",
+      "Roku Smart TVs",
+      "DVD player and movies",
+      "Books and games",
+      "Telephone",
+      "Ceiling fans",
+    ],
+  },
+  {
+    title: "Bedrooms and laundry",
+    items: [
+      "Linens and towels provided",
+      "Clothing storage",
+      "Hair dryer",
+      "Iron",
       "Washer",
       "Dryer",
-      "Telephone",
     ],
   },
   {
-    Icon: BookOpen,
-    title: "Entertainment",
-    items: ["Roku Smart TVs", "Books", "Games", "Movies", "DVD Player"],
-  },
-  {
-    Icon: Armchair,
-    title: "Standard Amenities",
+    title: "Comfort and safety",
     items: [
-      "Free Wi-Fi",
-      "Linens Provided",
-      "Towels Provided",
-      "Hair Dryer",
-      "Iron",
+      "Central air",
       "Heating",
-      "Central Air",
-      "Hot Water",
-      "Ceiling Fan",
-      "Clothing Storage",
-      "Cleaning Products",
-      "Private Entrance",
-      "Resort Access",
-      "Enhanced Cleaning Practices",
-      "Smoke Detectors",
-      "Carbon Monoxide Detectors",
-      "Fire Extinguisher",
-      "Hospital Nearby",
+      "Hot water",
+      "Free Wi-Fi",
+      "Cleaning products",
+      "Enhanced cleaning practices",
+      "Smoke detectors",
+      "Carbon monoxide detectors",
+      "Fire extinguisher",
+      "Hospital nearby",
     ],
   },
   {
-    Icon: Trees,
-    title: "Outdoor",
+    title: "Outside",
     items: [
-      "Private Hot Tub",
-      "Mountain Views",
-      "Mountain Setting",
-      "Deck / Patio",
-      "Outdoor Seating",
-      "Outdoor Grill",
-      "BBQ Area",
-      "Outdoor Lighting",
+      "Private hot tub",
+      "Deck and covered porch",
+      "Outdoor seating",
+      "Gas grill",
+      "Outdoor lighting",
       "Parking",
-      "Hiking",
-      "Walking",
-      "Horseback Riding",
-      "Fishing",
-      "Swimming",
-      "Communal Pool",
-      "Tubing",
-      "Tennis",
-      "Basketball Court",
-      "Playground",
-      "Pond",
-      "Meadow",
-      "Forests",
-      "Bicycles",
-      "Bird Watching",
-      "Autumn Foliage",
-      "Scenic Drives",
-      "Sight Seeing",
-      "Snow Sledding",
-    ],
-  },
-  {
-    Icon: Compass,
-    title: "Nearby Attractions",
-    items: [
-      "Restaurants",
-      "Waterfalls",
-      "Winery Tours",
-      "Skiing / Snowboarding",
-      "Rafting",
-      "Boating",
-      "Eco Tourism",
-      "Antiquing",
-      "Outlet Mall Shopping",
-      "Museums",
-      "Cinemas",
-      "Festivals",
-      "Tourist Attractions",
     ],
   },
 ];
 
-export const resortActivities: IconItem[] = [
-  { Icon: Trees, label: "Horseback Riding" },
-  { Icon: Footprints, label: "Hiking Trails" },
-  { Icon: Fish, label: "Fishing" },
-  { Icon: LifeBuoy, label: "Tubing" },
-  { Icon: Waves, label: "Swimming" },
-  { Icon: LandPlot, label: "Tennis" },
-  { Icon: Goal, label: "Basketball" },
-  { Icon: Route, label: "Scenic Drives" },
-  { Icon: UtensilsCrossed, label: "On-Site Restaurant When Open" },
+export const resortActivities = [
+  "Horseback riding",
+  "Hiking trails",
+  "Fishing",
+  "Tubing",
+  "Swimming in the communal pool",
+  "Tennis",
+  "Basketball court",
+  "Playground",
+  "Pond",
+  "On-site restaurant, when open",
 ];
 
-export const destinations: { title: string; note: string; text: string; photo: Photo }[] = [
-  {
-    title: "Boone",
-    note: "≈ 30 minutes",
-    text: "Downtown shops, dining, and the energy of a classic mountain college town.",
-    photo: photos.autumnRoad,
-  },
-  {
-    title: "Blowing Rock",
-    note: "≈ 30 minutes",
-    text: "A charming village of galleries, cafés, and sweeping overlooks.",
-    photo: photos.blowingRockSunset,
-  },
-  {
-    title: "Blue Ridge Parkway",
-    note: "Easy access",
-    text: "One of America's most scenic drives, with overlooks at every turn.",
-    photo: photos.parkway,
-  },
-  {
-    title: "Waterfalls & Trails",
-    note: "Across the High Country",
-    text: "Explore the natural beauty of North Carolina's High Country.",
-    photo: photos.waterfall,
-  },
+export const resortPhotos: { photo: Photo; caption: string }[] = [
+  { photo: photos.horseback, caption: "Horseback riding" },
+  { photo: photos.resortPool, caption: "The communal pool" },
+  { photo: photos.restaurant, caption: "The on-site restaurant" },
 ];
 
-/**
- * PLACEHOLDER REVIEWS — illustrative copy only.
- * Replace with real guest reviews (e.g. copied from your Airbnb/VRBO listing) before launch.
- * Add or remove entries freely; the section adapts to any count.
- */
-export const reviews: {
-  name: string;
-  location: string;
-  date: string;
-  rating: number;
-  text: string;
-}[] = [
-  {
-    name: "Guest Name",
-    location: "City, State",
-    date: "Month Year",
-    rating: 5,
-    text: "The views from the deck were even better than the photos. We spent every evening in the hot tub watching the ridgelines fade — exactly the quiet getaway we needed.",
-  },
-  {
-    name: "Guest Name",
-    location: "City, State",
-    date: "Month Year",
-    rating: 5,
-    text: "Spotless, comfortable, and thoughtfully stocked. Our dog loved it as much as we did, and the paved road made arriving easy.",
-  },
-  {
-    name: "Guest Name",
-    location: "City, State",
-    date: "Month Year",
-    rating: 5,
-    text: "The primary suite and whirlpool tub were a treat. Close enough to Boone for dinner, but it felt a world away.",
-  },
-  {
-    name: "Guest Name",
-    location: "City, State",
-    date: "Month Year",
-    rating: 5,
-    text: "Cozy fireplace, fast Wi-Fi, and a kitchen with everything we needed. We're already planning our fall trip back.",
-  },
+export const driveTimes: { place: string; time: string }[] = [
+  { place: "Boone", time: "About 30 minutes" },
+  { place: "Blowing Rock", time: "About 30 minutes" },
+  { place: "Blue Ridge Parkway", time: "Easy access" },
 ];
 
-export const importantInfo = {
-  checkIn: "After 4:00 PM",
-  checkOut: "Before 11:00 AM",
-  minimumAge: "25",
-  houseRules: ["No smoking", "No events", "No large gatherings"],
-  lateBooking: "Reservations made within 24 hours of arrival require verbal confirmation by phone.",
-  security: [
-    "Leatherwood Mountains uses surveillance or recording devices around the gated entrance and common areas for security.",
-    "Individual properties may also have exterior security cameras.",
-    "Cameras are not directed toward private areas such as hot tub porches or other private guest spaces.",
-  ],
-};
+export const nearby =
+  "Around the area you'll find waterfalls, winery tours, skiing and snowboarding, rafting, boating, antique shops, outlet shopping, museums, festivals, and restaurants.";
 
-export const petPolicy = [
-  "Dogs are welcome at Cliffside.",
-  "Pet fee of $75 per pet.",
-  "Maximum of 2 pets.",
-  "Please include the number of pets when you request your dates.",
-];
-
-export const locationPoints = [
+export const policies: { term: string; detail: string }[] = [
+  { term: "Check-in", detail: "After 4:00 PM" },
+  { term: "Check-out", detail: "Before 11:00 AM" },
+  { term: "Minimum age", detail: "25 to rent" },
+  { term: "Smoking", detail: "Not allowed" },
+  { term: "Events and large gatherings", detail: "Not allowed" },
+  { term: "Pets", detail: "Welcome. $75 per pet, up to 2 pets." },
   {
-    Icon: MapPin,
-    title: "Leatherwood Mountains",
-    text: "Gated resort community in the High Country",
+    term: "Bookings within 24 hours",
+    detail: "Need verbal confirmation by phone before arrival.",
   },
-  { Icon: Compass, title: "Boone", text: "Approximately 30 minutes" },
-  { Icon: Compass, title: "Blowing Rock", text: "Approximately 30 minutes" },
-  { Icon: Car, title: "Blue Ridge Parkway", text: "Easy access for scenic drives" },
+  {
+    term: "Security cameras",
+    detail:
+      "The resort has cameras at the gated entrance and in common areas, and individual cabins may have cameras on the outside. None point at private areas such as hot tub porches.",
+  },
 ];
 
 export const faqs: { q: string; a: string }[] = [
-  {
-    q: "Is Cliffside pet friendly?",
-    a: "Yes. Dogs are welcome at Cliffside. The pet fee is $75 per pet, with a maximum of 2 pets.",
-  },
-  {
-    q: "Does the cabin have a hot tub?",
-    a: "Yes. Cliffside has a private hot tub outdoors, perfect after a day exploring the mountains.",
-  },
-  {
-    q: "Does the cabin have Wi-Fi?",
-    a: "Yes. The cabin has high-speed fiber optic Wi-Fi, plus Roku Smart TVs.",
-  },
+  { q: "Is Cliffside pet friendly?", a: "Yes. The pet fee is $75 per pet, with up to 2 pets." },
+  { q: "Does the cabin have a hot tub?", a: "Yes, a private hot tub on the covered porch." },
+  { q: "Does the cabin have Wi-Fi?", a: "Yes, high-speed fiber optic Wi-Fi." },
   {
     q: "How many guests can stay?",
-    a: "Cliffside sleeps up to 4 guests across two bedrooms — a king primary suite and a queen guest bedroom.",
+    a: "Up to 4: a king bed in the upstairs suite and a queen bed in the main-level bedroom.",
   },
-  {
-    q: "Is the road to the cabin paved?",
-    a: "Yes. Cliffside has paved road access, making arrival easy throughout the year.",
-  },
+  { q: "Is the road to the cabin paved?", a: "Yes, the cabin has paved road access." },
   {
     q: "Is the property inside a gated community?",
-    a: "Yes. Cliffside is located inside the gated Leatherwood Mountains Resort.",
+    a: "Yes. Cliffside is inside the gated Leatherwood Mountains Resort.",
   },
-  {
-    q: "How far is Cliffside from Boone?",
-    a: "Boone is approximately 30 minutes away by car.",
-  },
-  {
-    q: "How far is Cliffside from Blowing Rock?",
-    a: "Blowing Rock is approximately 30 minutes away by car.",
-  },
-  {
-    q: "Does the cabin have air conditioning?",
-    a: "Yes. The cabin has central air conditioning and heating.",
-  },
+  { q: "How far is Cliffside from Boone?", a: "About 30 minutes by car." },
+  { q: "How far is Cliffside from Blowing Rock?", a: "About 30 minutes by car." },
+  { q: "Does the cabin have air conditioning?", a: "Yes, central air and heating." },
   {
     q: "Does the kitchen have everything needed to cook?",
-    a: "Yes. The fully equipped kitchen has full-size appliances, a dishwasher, coffee makers, dishes, and utensils.",
+    a: "It's fully equipped: full-size appliances, a dishwasher, coffee makers, dishes, and utensils.",
   },
-  {
-    q: "Is there a washer and dryer?",
-    a: "Yes. A washer and dryer are available for guests.",
-  },
+  { q: "Is there a washer and dryer?", a: "Yes, both are in the cabin." },
   {
     q: "What time is check-in and check-out?",
-    a: "Check-in is after 4:00 PM and check-out is before 11:00 AM.",
+    a: "Check-in is after 4:00 PM. Check-out is before 11:00 AM.",
+  },
+  {
+    q: "How do I book?",
+    a: "Cliffside is managed and booked by Leatherwood Mountains. Use Check availability to see dates and book on their site, or email info@leatherwoodmountains.com.",
   },
 ];

@@ -5,19 +5,18 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system — Cliffside
- * Warm ivory surfaces, deep forest green ink, copper used sparingly.
- * Cormorant Garamond display serif over Manrope body.
+ * Cliffside design system
+ * Neutrals: ivory, cream, stone, charcoal, with forest green as the dark neutral.
+ * Accent: copper, for actions and active states only.
+ * Type: Cormorant Garamond for page and section headings, Manrope for everything else.
+ * Shape: one 6px radius (rounded-lg), one 1px stone border, shadows only on overlays.
  */
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
+  --radius-xl: var(--radius);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -39,14 +38,10 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* Cliffside palette */
   --color-forest: var(--forest);
   --color-forest-deep: var(--forest-deep);
-  --color-sage: var(--sage);
-  --color-sage-deep: var(--sage-deep);
   --color-copper: var(--copper);
   --color-copper-hover: var(--copper-hover);
-  --color-copper-deep: var(--copper-deep);
   --color-ivory: var(--ivory);
   --color-cream: var(--cream);
   --color-charcoal: var(--charcoal);
@@ -57,17 +52,14 @@
 }
 
 :root {
-  --radius: 0.875rem;
+  --radius: 0.375rem;
 
   --forest: #23372d;
   --forest-deep: #1a2a22;
-  --sage: #7c8b76;
-  /* Sage darkened for small text on ivory (AA contrast). */
-  --sage-deep: #5f6e5a;
-  --copper: #b66a3c;
-  --copper-hover: #a65c30;
-  /* Copper darkened for small text on ivory/cream (AA contrast). */
-  --copper-deep: #9a5530;
+  /* Brand copper #b66a3c, darkened a step so white button text passes AA (5.0:1). */
+  --copper: #a65c30;
+  /* Hover state, and copper text on ivory/cream (5.1:1). */
+  --copper-hover: #9a5530;
   --ivory: #f6f2ea;
   --cream: #ede6d9;
   --charcoal: #252824;
@@ -75,16 +67,16 @@
 
   --background: var(--ivory);
   --foreground: var(--charcoal);
-  --card: #fbf9f5;
+  --card: var(--ivory);
   --card-foreground: var(--charcoal);
-  --popover: #fbf9f5;
+  --popover: var(--ivory);
   --popover-foreground: var(--charcoal);
   --primary: var(--forest);
   --primary-foreground: var(--ivory);
   --secondary: var(--cream);
   --secondary-foreground: var(--forest);
   --muted: var(--cream);
-  --muted-foreground: #5c5f58;
+  --muted-foreground: #585b54;
   --accent: var(--cream);
   --accent-foreground: var(--forest);
   --destructive: oklch(0.577 0.245 27.325);
@@ -109,6 +101,8 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -116,9 +110,14 @@
   h1,
   h2,
   h3 {
-    font-family: var(--font-display);
     color: var(--color-forest);
     text-wrap: balance;
+  }
+
+  p,
+  li,
+  dd {
+    text-wrap: pretty;
   }
 
   :focus-visible {
@@ -139,50 +138,59 @@
   }
 }
 
-.eyebrow {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-}
-
-/* Scroll reveal — toggled by <Reveal>; content stays visible without JS. */
-.js .reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition:
-    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: var(--reveal-delay, 0ms);
-}
-.js .reveal.is-visible {
-  opacity: 1;
-  transform: none;
-}
-
-/* Horizontal swipe rows (reviews, mobile gallery) */
-.snap-row {
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-}
-.snap-row::-webkit-scrollbar {
-  display: none;
-}
-.snap-row > * {
-  scroll-snap-align: start;
-}
-
-@keyframes hero-zoom {
-  from {
-    transform: scale(1.08);
+/* Type roles. Hierarchy comes from family, size, weight and spacing together. */
+@layer components {
+  /* Page title: the one h1 per page. */
+  .type-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.04;
+    letter-spacing: -0.01em;
   }
-  to {
-    transform: scale(1);
+  /* Section heading (h2). */
+  .type-heading {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2rem, 3.6vw, 2.75rem);
+    line-height: 1.1;
+  }
+  /* Secondary heading (h3): sans, so it reads as a different level, not a smaller h2. */
+  .type-subheading {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 1.0625rem;
+    line-height: 1.4;
+  }
+  /* Short labels: definition terms, field names. */
+  .type-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--color-muted-foreground);
+  }
+  /* Photo captions and supporting notes. */
+  .type-caption {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-muted-foreground);
   }
 }
-.hero-zoom {
-  animation: hero-zoom 2.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+/* Horizontal swipe rows (photo strips, tabs on small screens). In the components layer so
+   responsive utilities such as sm:grid can switch it off. */
+@layer components {
+  .snap-row {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .snap-row::-webkit-scrollbar {
+    display: none;
+  }
+  .snap-row > * {
+    scroll-snap-align: start;
+  }
 }
