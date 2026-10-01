@@ -29,7 +29,7 @@ export function Hero() {
             Check availability
           </a>
           <a href="/cliffside" className={cn(button.link, "text-white decoration-white/50")}>
-            See all 41 photos
+            See photos
           </a>
         </div>
         <p className="type-caption mt-4 text-white/75">

@@ -237,7 +237,7 @@ export function Cabin() {
 
         <p className="mt-12">
           <a href="/cliffside" className={cn(button.link, "text-forest decoration-stone")}>
-            See all 41 photos
+            See photos
           </a>
         </p>
       </Container>

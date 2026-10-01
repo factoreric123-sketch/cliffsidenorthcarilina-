@@ -11,7 +11,7 @@ export const Route = createFileRoute("/cliffside")({
       {
         name: "description",
         content:
-          "All 41 photos of Cliffside, a two-bedroom log cabin with a private hot tub inside Leatherwood Mountains Resort, NC.",
+          "Photos of Cliffside, a two-bedroom log cabin with a private hot tub inside Leatherwood Mountains Resort, NC.",
       },
     ],
   }),
