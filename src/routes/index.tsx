@@ -43,7 +43,7 @@ const features: { Icon: LucideIcon; title: string; text: string }[] = [
     text: "Unwind by the stone gas fireplace in the comfortable living space after a day on the trails.",
   },
   {
-    Icon: HotTub,
+    Icon: Waves,
     title: "Private hot tub",
     text: "Soak under the stars with long-range Blue Ridge Mountain views from the spacious deck.",
   },
