@@ -259,9 +259,7 @@ function Index() {
           <div className="mt-12 grid gap-px bg-black/10 md:grid-cols-3">
             {features.map((f) => (
               <div key={f.title} className="reveal bg-cream p-8">
-                <p className="text-2xl" aria-hidden="true">
-                  {f.icon}
-                </p>
+                <f.Icon className="size-6 text-timber" strokeWidth={1.5} aria-hidden="true" />
                 <h3 className="mt-5 font-display text-xl font-semibold text-pine-deep">
                   {f.title}
                 </h3>
