@@ -47,14 +47,20 @@ export const site = {
   contactEmail: "bookings@example.com",
 };
 
+export const description = [
+  "Welcome to Cliffside, a private mountain cabin located in the gated Leatherwood Mountains Resort. Surrounded by the beauty of North Carolina's High Country, Cliffside combines peaceful seclusion, long-range Blue Ridge Mountain views, and the comforts of home.",
+  "Spend mornings overlooking the mountains, afternoons exploring the trails, and evenings relaxing in the private hot tub or beside the stone gas fireplace.",
+  "Whether you're planning a romantic getaway, a small family trip, or a mountain escape with your dog, Cliffside offers a comfortable and relaxing place to slow down.",
+];
+
 export const nav = [
-  { label: "Home", href: "#home" },
-  { label: "The Cabin", href: "#cabin" },
-  { label: "Amenities", href: "#amenities" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Location", href: "#location" },
-  { label: "Reviews", href: "#reviews" },
-  { label: "Availability", href: "#availability" },
+  { label: "Home", href: "/#home" },
+  { label: "The Cabin", href: "/#cabin" },
+  { label: "Amenities", href: "/#amenities" },
+  { label: "Gallery", href: "/#gallery" },
+  { label: "Location", href: "/#location" },
+  { label: "Reviews", href: "/#reviews" },
+  { label: "Availability", href: "/#availability" },
 ];
 
 type IconItem = { Icon: LucideIcon; label: string };

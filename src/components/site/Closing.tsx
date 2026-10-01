@@ -144,7 +144,7 @@ export function PetFriendly() {
                   </ul>
                   <Dialog.Close asChild>
                     <a
-                      href="#availability"
+                      href="/#availability"
                       className={cn(buttonStyles.base, buttonStyles.copper, "mt-8 w-full")}
                     >
                       Check Availability
@@ -211,7 +211,7 @@ export function FinalCta() {
             Carolina's High Country.
           </p>
           <a
-            href="#availability"
+            href="/#availability"
             className={cn(buttonStyles.base, buttonStyles.copper, "mt-10 px-10 py-4 text-base")}
           >
             Book Cliffside
@@ -224,7 +224,7 @@ export function FinalCta() {
 
 export function Footer() {
   const links = [
-    ...nav.filter((n) => n.href !== "#home"),
+    ...nav.filter((n) => n.href !== "/#home"),
     { label: "Contact", href: `mailto:${site.contactEmail}` },
   ];
   return (
@@ -250,7 +250,7 @@ export function Footer() {
             </ul>
           </nav>
           <a
-            href="#availability"
+            href="/#availability"
             className={cn(buttonStyles.base, buttonStyles.copper, "self-start")}
           >
             Book Your Stay

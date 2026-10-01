@@ -1,7 +1,7 @@
 import { Check } from "lucide-react";
 
 import { photos } from "@/content/photos";
-import { experiences, rooms } from "@/content/site";
+import { description, experiences, rooms } from "@/content/site";
 import { cn } from "@/lib/utils";
 
 import { Container, Img, Reveal, SectionHeading } from "./primitives";
@@ -20,20 +20,9 @@ export function Intro() {
             delay={120}
             className="mt-8 space-y-5 text-[1.05rem] leading-[1.8] text-muted-foreground"
           >
-            <p>
-              Welcome to Cliffside, a private mountain cabin located in the gated Leatherwood
-              Mountains Resort. Surrounded by the beauty of North Carolina's High Country, Cliffside
-              combines peaceful seclusion, long-range Blue Ridge Mountain views, and the comforts of
-              home.
-            </p>
-            <p>
-              Spend mornings overlooking the mountains, afternoons exploring the trails, and
-              evenings relaxing in the private hot tub or beside the stone gas fireplace.
-            </p>
-            <p>
-              Whether you're planning a romantic getaway, a small family trip, or a mountain escape
-              with your dog, Cliffside offers a comfortable and relaxing place to slow down.
-            </p>
+            {description.map((p) => (
+              <p key={p}>{p}</p>
+            ))}
           </Reveal>
         </div>
 

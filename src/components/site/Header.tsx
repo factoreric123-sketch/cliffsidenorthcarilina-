@@ -10,7 +10,7 @@ import { buttonStyles, Container } from "./primitives";
 function Logo() {
   return (
     <a
-      href="#home"
+      href="/#home"
       className="group flex flex-col leading-none"
       aria-label="Cliffside — back to top"
     >
@@ -24,9 +24,9 @@ function Logo() {
   );
 }
 
-export function Header() {
+export function Header({ solid = false }: { solid?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState("#home");
+  const [active, setActive] = useState(solid ? "" : "/#home");
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -39,11 +39,11 @@ export function Header() {
   // Highlight the nav link for the section currently in view.
   useEffect(() => {
     const sections = nav
-      .map((n) => document.querySelector(n.href))
-      .filter((el): el is Element => el !== null);
+      .map((n) => document.getElementById(n.href.split("#")[1] ?? ""))
+      .filter((el): el is HTMLElement => el !== null);
     const io = new IntersectionObserver(
       (entries) => {
-        for (const e of entries) if (e.isIntersecting) setActive(`#${e.target.id}`);
+        for (const e of entries) if (e.isIntersecting) setActive(`/#${e.target.id}`);
       },
       { rootMargin: "-45% 0px -50% 0px" },
     );
@@ -55,7 +55,7 @@ export function Header() {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-40 transition-[background-color,box-shadow,padding] duration-500",
-        scrolled
+        scrolled || solid
           ? "bg-forest/97 py-3 shadow-[0_10px_30px_-20px_rgba(0,0,0,0.6)]"
           : "bg-gradient-to-b from-black/40 to-transparent py-5",
       )}
@@ -85,7 +85,7 @@ export function Header() {
 
         <div className="flex items-center gap-2">
           <a
-            href="#availability"
+            href="/#availability"
             className={cn(
               buttonStyles.base,
               buttonStyles.copper,
@@ -141,7 +141,7 @@ export function Header() {
                   </ul>
                 </nav>
                 <a
-                  href="#availability"
+                  href="/#availability"
                   onClick={() => setOpen(false)}
                   className={cn(buttonStyles.base, buttonStyles.copper, "w-full py-4")}
                 >

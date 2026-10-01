@@ -213,6 +213,22 @@ export const photos = {
     src: cabin("39"),
     alt: "A white-tailed deer in a field at Leatherwood",
   },
+  welcomeSign: {
+    src: cabin("05"),
+    alt: "Leatherwood Mountains welcome sign at the resort entrance",
+  },
+  giftShop: {
+    src: cabin("32"),
+    alt: "The Leatherwood Mountains general store and gift shop",
+  },
+  horse: {
+    src: cabin("33"),
+    alt: "A rider with one of the Leatherwood stable horses",
+  },
+  petPolicyGraphic: {
+    src: cabin("28"),
+    alt: "Pet-friendly unit: pets welcome for an additional $75 per pet, 2 pet maximum",
+  },
 
   // Stock placeholders (no matching property photos yet)
   dogPorch: {
@@ -296,6 +312,12 @@ export const galleryPhotos: Photo[] = [
   photos.pavilion,
   photos.lodge,
   photos.resortPool,
+  photos.restaurant,
+  photos.giftShop,
+  photos.horse,
+  photos.deer,
+  photos.welcomeSign,
+  photos.petPolicyGraphic,
 ];
 
 export const galleryCategories: ("All" | GalleryCategory)[] = [

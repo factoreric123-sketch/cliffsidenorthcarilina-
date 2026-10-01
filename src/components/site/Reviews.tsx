@@ -61,28 +61,31 @@ export function Reviews() {
               delay={Math.min(i, 2) * 100}
               className="w-[85%] shrink-0 sm:w-[60%] lg:w-[calc((100%-2.5rem)/3)]"
             >
-              <figure className="flex h-full flex-col rounded-3xl bg-ivory p-8 shadow-[0_24px_48px_-40px_rgba(35,55,45,0.6)] sm:p-10">
-                <span
-                  aria-hidden="true"
-                  className="font-display text-[5.5rem] leading-[0.6] text-copper/70"
-                >
-                  &ldquo;
-                </span>
-                <Stars rating={r.rating} className="mt-4" />
-                <blockquote className="mt-5 flex-1 font-display text-[1.45rem] leading-snug text-charcoal">
-                  {r.text}
-                </blockquote>
-                <figcaption className="mt-8 border-t border-stone/70 pt-5">
-                  <p className="font-semibold text-forest">{r.name}</p>
-                  <p className="text-sm text-muted-foreground">
-                    {r.location} · {r.date}
-                  </p>
-                </figcaption>
-              </figure>
+              <ReviewCard review={r} />
             </Reveal>
           ))}
         </ul>
       </Container>
     </section>
+  );
+}
+
+export function ReviewCard({ review }: { review: (typeof reviews)[number] }) {
+  return (
+    <figure className="flex h-full flex-col rounded-3xl bg-ivory p-8 shadow-[0_24px_48px_-40px_rgba(35,55,45,0.6)] sm:p-10">
+      <span aria-hidden="true" className="font-display text-[5.5rem] leading-[0.6] text-copper/70">
+        &ldquo;
+      </span>
+      <Stars rating={review.rating} className="mt-4" />
+      <blockquote className="mt-5 flex-1 font-display text-[1.45rem] leading-snug text-charcoal">
+        {review.text}
+      </blockquote>
+      <figcaption className="mt-8 border-t border-stone/70 pt-5">
+        <p className="font-semibold text-forest">{review.name}</p>
+        <p className="text-sm text-muted-foreground">
+          {review.location} · {review.date}
+        </p>
+      </figcaption>
+    </figure>
   );
 }

@@ -76,7 +76,7 @@ function DateField({ label, date }: { label: string; date: Date | undefined }) {
   );
 }
 
-export function Booking() {
+export function BookingForm({ className }: { className?: string }) {
   const isMobile = useIsMobile();
   const [range, setRange] = useState<DateRange | undefined>();
   const [guests, setGuests] = useState(2);
@@ -111,6 +111,99 @@ export function Booking() {
   };
 
   return (
+    <form
+      onSubmit={submit}
+      noValidate
+      className={cn(
+        "rounded-3xl bg-card p-5 text-charcoal shadow-[0_40px_80px_-40px_rgba(0,0,0,0.6)] sm:p-8",
+        className,
+      )}
+    >
+      <div className="grid grid-cols-2 gap-3">
+        <DateField label="Check-in" date={range?.from} />
+        <DateField label="Check-out" date={range?.to} />
+      </div>
+
+      <div className="mt-5 flex justify-center rounded-2xl border border-stone/70 bg-ivory/60 px-1 py-3 sm:px-4">
+        <Calendar
+          mode="range"
+          selected={range}
+          onSelect={(r) => {
+            setRange(r);
+            setError("");
+            setSent(false);
+          }}
+          numberOfMonths={isMobile ? 1 : 2}
+          disabled={{ before: startOfToday() }}
+          startMonth={startOfToday()}
+          excludeDisabled
+          className="w-full bg-transparent p-0 [--cell-size:2.6rem] sm:[--cell-size:2.75rem]"
+          classNames={{
+            root: "w-full",
+            months: "relative flex flex-col gap-8 md:flex-row",
+            caption_label: "font-display text-xl font-semibold text-forest select-none",
+          }}
+        />
+      </div>
+      <p className="mt-3 text-center text-sm text-muted-foreground" aria-live="polite">
+        {nights > 0
+          ? `${nights} night${nights > 1 ? "s" : ""} selected`
+          : range?.from
+            ? "Now select your check-out date"
+            : "Select your check-in date"}
+        {range?.from && (
+          <button
+            type="button"
+            onClick={() => setRange(undefined)}
+            className="ml-3 font-semibold text-copper-deep underline-offset-4 hover:underline"
+          >
+            Clear dates
+          </button>
+        )}
+      </p>
+
+      <div className="mt-4 divide-y divide-stone/70 border-y border-stone/70">
+        <Stepper
+          label="Guests"
+          hint={`Up to ${MAX_GUESTS} guests`}
+          value={guests}
+          min={1}
+          max={MAX_GUESTS}
+          onChange={setGuests}
+        />
+        <Stepper
+          label="Pets"
+          hint="$75 per pet · max 2"
+          value={pets}
+          min={0}
+          max={MAX_PETS}
+          onChange={setPets}
+        />
+      </div>
+
+      {error && (
+        <p role="alert" className="mt-4 text-sm font-medium text-copper-deep">
+          {error}
+        </p>
+      )}
+
+      <button
+        type="submit"
+        className={cn(buttonStyles.base, buttonStyles.copper, "mt-6 w-full py-4 text-base")}
+      >
+        Check Availability
+      </button>
+      <p className="mt-3 text-center text-xs leading-relaxed text-muted-foreground">
+        {sent
+          ? "Your email app should open with your request ready to send."
+          : "No payment needed to check availability. Minimum rental age 25."}
+      </p>
+    </form>
+  );
+}
+
+export function Booking() {
+  return (
     <section
       id="availability"
       aria-labelledby="availability-title"
@@ -141,91 +234,7 @@ export function Booking() {
         </div>
 
         <Reveal delay={100} className="lg:col-span-8">
-          <form
-            onSubmit={submit}
-            noValidate
-            className="rounded-3xl bg-card p-5 text-charcoal shadow-[0_40px_80px_-40px_rgba(0,0,0,0.6)] sm:p-8"
-          >
-            <div className="grid grid-cols-2 gap-3">
-              <DateField label="Check-in" date={range?.from} />
-              <DateField label="Check-out" date={range?.to} />
-            </div>
-
-            <div className="mt-5 flex justify-center rounded-2xl border border-stone/70 bg-ivory/60 px-1 py-3 sm:px-4">
-              <Calendar
-                mode="range"
-                selected={range}
-                onSelect={(r) => {
-                  setRange(r);
-                  setError("");
-                  setSent(false);
-                }}
-                numberOfMonths={isMobile ? 1 : 2}
-                disabled={{ before: startOfToday() }}
-                startMonth={startOfToday()}
-                excludeDisabled
-                className="w-full bg-transparent p-0 [--cell-size:2.6rem] sm:[--cell-size:2.75rem]"
-                classNames={{
-                  root: "w-full",
-                  months: "relative flex flex-col gap-8 md:flex-row",
-                  caption_label: "font-display text-xl font-semibold text-forest select-none",
-                }}
-              />
-            </div>
-            <p className="mt-3 text-center text-sm text-muted-foreground" aria-live="polite">
-              {nights > 0
-                ? `${nights} night${nights > 1 ? "s" : ""} selected`
-                : range?.from
-                  ? "Now select your check-out date"
-                  : "Select your check-in date"}
-              {range?.from && (
-                <button
-                  type="button"
-                  onClick={() => setRange(undefined)}
-                  className="ml-3 font-semibold text-copper-deep underline-offset-4 hover:underline"
-                >
-                  Clear dates
-                </button>
-              )}
-            </p>
-
-            <div className="mt-4 divide-y divide-stone/70 border-y border-stone/70">
-              <Stepper
-                label="Guests"
-                hint={`Up to ${MAX_GUESTS} guests`}
-                value={guests}
-                min={1}
-                max={MAX_GUESTS}
-                onChange={setGuests}
-              />
-              <Stepper
-                label="Pets"
-                hint="$75 per pet · max 2"
-                value={pets}
-                min={0}
-                max={MAX_PETS}
-                onChange={setPets}
-              />
-            </div>
-
-            {error && (
-              <p role="alert" className="mt-4 text-sm font-medium text-copper-deep">
-                {error}
-              </p>
-            )}
-
-            <button
-              type="submit"
-              className={cn(buttonStyles.base, buttonStyles.copper, "mt-6 w-full py-4 text-base")}
-            >
-              Check Availability
-            </button>
-            <p className="mt-3 text-center text-xs leading-relaxed text-muted-foreground">
-              {sent
-                ? "Your email app should open with your request ready to send."
-                : "No payment needed to check availability. Minimum rental age 25."}
-            </p>
-          </form>
+          <BookingForm />
         </Reveal>
       </Container>
     </section>

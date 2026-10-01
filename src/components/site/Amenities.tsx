@@ -74,37 +74,49 @@ export function Amenities() {
           intro="Thoughtful comforts for a relaxed stay, from the hot tub on the deck to fiber Wi-Fi inside."
         />
 
-        <ul className="mt-14 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
-          {amenityHighlights.map(({ Icon, label }, i) => (
-            <Reveal
-              as="li"
-              key={label}
-              delay={(i % 4) * 70}
-              className="group flex flex-col gap-4 rounded-2xl bg-ivory p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_36px_-24px_rgba(35,55,45,0.5)] sm:flex-row sm:items-center sm:p-6"
-            >
-              <Icon
-                className="size-7 shrink-0 text-forest transition-colors group-hover:text-copper"
-                strokeWidth={1.3}
-                aria-hidden="true"
-              />
-              <span className="text-[0.95rem] leading-snug font-semibold text-forest">{label}</span>
-            </Reveal>
-          ))}
-        </ul>
+        <AmenityHighlights className="mt-14" />
 
         <div className="mt-20">
           <Reveal>
             <h3 className="font-display text-3xl font-medium sm:text-4xl">All Amenities</h3>
           </Reveal>
-          <div className="mt-8 grid items-start gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {amenityCategories.map((c, i) => (
-              <Reveal key={c.title} delay={(i % 3) * 90}>
-                <AmenityCategory category={c} />
-              </Reveal>
-            ))}
-          </div>
+          <AmenityCategories className="mt-8" />
         </div>
       </Container>
     </section>
+  );
+}
+
+export function AmenityHighlights({ className }: { className?: string }) {
+  return (
+    <ul className={cn("grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4", className)}>
+      {amenityHighlights.map(({ Icon, label }, i) => (
+        <Reveal
+          as="li"
+          key={label}
+          delay={(i % 4) * 70}
+          className="group flex flex-col gap-4 rounded-2xl bg-ivory p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_36px_-24px_rgba(35,55,45,0.5)] sm:flex-row sm:items-center sm:p-6"
+        >
+          <Icon
+            className="size-7 shrink-0 text-forest transition-colors group-hover:text-copper"
+            strokeWidth={1.3}
+            aria-hidden="true"
+          />
+          <span className="text-[0.95rem] leading-snug font-semibold text-forest">{label}</span>
+        </Reveal>
+      ))}
+    </ul>
+  );
+}
+
+export function AmenityCategories({ className }: { className?: string }) {
+  return (
+    <div className={cn("grid items-start gap-5 md:grid-cols-2 lg:grid-cols-3", className)}>
+      {amenityCategories.map((c, i) => (
+        <Reveal key={c.title} delay={(i % 3) * 90}>
+          <AmenityCategory category={c} />
+        </Reveal>
+      ))}
+    </div>
   );
 }

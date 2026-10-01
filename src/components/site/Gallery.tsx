@@ -37,7 +37,7 @@ function PhotoButton({
   );
 }
 
-function Lightbox({
+export function Lightbox({
   open,
   onOpenChange,
   startIndex,
@@ -288,14 +288,10 @@ export function Gallery() {
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <SectionHeading id="gallery-title" eyebrow="Gallery" title="A Closer Look" />
           <Reveal className="hidden sm:block">
-            <button
-              type="button"
-              onClick={() => openAt(null)}
-              className={cn(buttonStyles.base, buttonStyles.outline)}
-            >
+            <a href="/cliffside" className={cn(buttonStyles.base, buttonStyles.outline)}>
               <Grid2x2 className="size-4" aria-hidden="true" />
               View All Photos
-            </button>
+            </a>
           </Reveal>
         </div>
 
@@ -346,14 +342,13 @@ export function Gallery() {
               />
             ))}
           </div>
-          <button
-            type="button"
-            onClick={() => openAt(null)}
+          <a
+            href="/cliffside"
             className={cn(buttonStyles.base, buttonStyles.outline, "px-5 py-3 text-sm")}
           >
             <Grid2x2 className="size-4" aria-hidden="true" />
             View All Photos
-          </button>
+          </a>
         </div>
       </div>
 

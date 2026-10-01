@@ -1,6 +1,8 @@
 import { photos } from "@/content/photos";
 import { destinations, locationPoints, resortActivities } from "@/content/site";
 
+import { cn } from "@/lib/utils";
+
 import { Container, Img, Reveal, SectionHeading } from "./primitives";
 
 export function Leatherwood() {
@@ -79,7 +81,7 @@ export function HighCountry() {
 }
 
 /** Stylized, approximate regional map — intentionally not a pin on the exact address. */
-function RegionMap() {
+export function RegionMap() {
   const ridges = [
     "M0 380 C80 340 140 360 220 320 S380 300 460 260 560 250 600 230",
     "M0 300 C90 270 150 290 230 240 S380 210 470 170 560 150 600 140",
@@ -216,24 +218,7 @@ export function Location() {
             title="Hidden in the Mountains. Close to Everything."
             intro="Tucked away inside a gated resort, yet an easy drive to the High Country's favorite towns and overlooks."
           />
-          <ul className="mt-10 space-y-1">
-            {locationPoints.map(({ Icon, title, text }, i) => (
-              <Reveal
-                as="li"
-                key={title}
-                delay={i * 70}
-                className="flex items-center gap-4 border-b border-stone/70 py-4"
-              >
-                <span className="grid size-11 shrink-0 place-items-center rounded-full bg-cream text-copper">
-                  <Icon className="size-5" strokeWidth={1.5} aria-hidden="true" />
-                </span>
-                <div>
-                  <p className="font-semibold text-forest">{title}</p>
-                  <p className="text-sm text-muted-foreground">{text}</p>
-                </div>
-              </Reveal>
-            ))}
-          </ul>
+          <LocationList className="mt-10" />
         </div>
         <Reveal delay={120} className="lg:col-span-7">
           <div className="overflow-hidden rounded-3xl border border-stone/80 shadow-[0_30px_60px_-40px_rgba(35,55,45,0.6)]">
@@ -242,5 +227,28 @@ export function Location() {
         </Reveal>
       </Container>
     </section>
+  );
+}
+
+export function LocationList({ className }: { className?: string }) {
+  return (
+    <ul className={cn("space-y-1", className)}>
+      {locationPoints.map(({ Icon, title, text }, i) => (
+        <Reveal
+          as="li"
+          key={title}
+          delay={i * 70}
+          className="flex items-center gap-4 border-b border-stone/70 py-4"
+        >
+          <span className="grid size-11 shrink-0 place-items-center rounded-full bg-cream text-copper">
+            <Icon className="size-5" strokeWidth={1.5} aria-hidden="true" />
+          </span>
+          <div>
+            <p className="font-semibold text-forest">{title}</p>
+            <p className="text-sm text-muted-foreground">{text}</p>
+          </div>
+        </Reveal>
+      ))}
+    </ul>
   );
 }
