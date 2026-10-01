@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
   Flame,
-  HotTub,
+  Waves,
   BedDouble,
   Mountain,
   CookingPot,
