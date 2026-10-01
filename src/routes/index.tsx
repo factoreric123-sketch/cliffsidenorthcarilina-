@@ -1,4 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
+import {
+  Flame,
+  HotTub,
+  BedDouble,
+  Mountain,
+  CookingPot,
+  Wifi,
+  type LucideIcon,
+} from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,34 +36,34 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const features = [
+const features: { Icon: LucideIcon; title: string; text: string }[] = [
   {
-    icon: "🔥",
+    Icon: Flame,
     title: "Stone gas fireplace",
     text: "Unwind by the stone gas fireplace in the comfortable living space after a day on the trails.",
   },
   {
-    icon: "♨️",
+    Icon: HotTub,
     title: "Private hot tub",
     text: "Soak under the stars with long-range Blue Ridge Mountain views from the spacious deck.",
   },
   {
-    icon: "🛏️",
+    Icon: BedDouble,
     title: "King primary suite",
     text: "Upper-level suite with double vanity, walk-in shower, and a two-person whirlpool tub.",
   },
   {
-    icon: "🌄",
+    Icon: Mountain,
     title: "Queen guest bedroom",
     text: "Main-level bedroom with mountain views and a comfortable queen bed — two full bathrooms.",
   },
   {
-    icon: "🍳",
+    Icon: CookingPot,
     title: "Fully equipped kitchen",
     text: "Kitchen, dining area, and living space with everything needed for a relaxing stay.",
   },
   {
-    icon: "📶",
+    Icon: Wifi,
     title: "Fiber WiFi & Roku TVs",
     text: "High-speed fiber optic WiFi, Roku Smart TVs, DVD player, plus washer and dryer.",
   },
