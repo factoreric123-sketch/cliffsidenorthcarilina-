@@ -35,7 +35,7 @@ function PhotoViewer() {
     if (!strip || !thumb) return;
     strip.scrollTo({
       left: thumb.offsetLeft - strip.clientWidth / 2 + thumb.clientWidth / 2,
-      behavior: "smooth",
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
     });
     for (const d of [1, -1]) {
       const next = galleryPhotos[(index + d + count) % count];
@@ -44,8 +44,10 @@ function PhotoViewer() {
   }, [index, count]);
 
   const onKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "ArrowRight") go(1);
-    if (e.key === "ArrowLeft") go(-1);
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+      e.preventDefault();
+      go(e.key === "ArrowRight" ? 1 : -1);
+    }
   };
 
   return (
@@ -109,7 +111,11 @@ function PhotoViewer() {
         </span>
       </p>
 
-      <div ref={stripRef} className="snap-row mt-3 gap-2 pb-1" aria-label="Photo thumbnails">
+      <div
+        ref={stripRef}
+        className="snap-row relative mt-3 gap-2 pb-1"
+        aria-label="Photo thumbnails"
+      >
         {galleryPhotos.map((p, i) => (
           <button
             key={p.src}

@@ -171,27 +171,39 @@ export function ArrivalAndRules() {
 export function Intro() {
   return (
     <section aria-labelledby="intro-title" className="py-16 sm:py-24">
-      <Container>
-        <div className="max-w-3xl">
-          <h2 id="intro-title" className="type-heading">
-            {intro.title}
-          </h2>
-          <p className="mt-6 text-xl leading-relaxed sm:text-[1.375rem]">{intro.text}</p>
-        </div>
-        <div className="mt-10 border-t border-stone pt-5">
-          <h3 className="type-label">Perfect for</h3>
-          <ul className="mt-2 flex flex-wrap gap-x-2 gap-y-1">
-            {intro.perfectFor.map((p, i) => (
-              <li key={p}>
-                {p}
-                {i < intro.perfectFor.length - 1 && (
-                  <span className="ml-2 text-stone" aria-hidden="true">
-                    ·
-                  </span>
-                )}
-              </li>
-            ))}
-          </ul>
+      <Container className="grid items-center gap-8 md:grid-cols-2 md:gap-12">
+        <Figure photo={photos.exteriorFront} sizes="(min-width: 768px) 50vw, 100vw" />
+        <div>
+          <div className="max-w-3xl">
+            <h2 id="intro-title" className="type-heading">
+              {intro.title}
+            </h2>
+            <p className="mt-5 text-lg leading-relaxed">{intro.text}</p>
+          </div>
+          <div className="mt-10 border-t border-stone pt-5">
+            <h3 className="type-label">Perfect for</h3>
+            <ul className="mt-2 flex flex-wrap gap-x-2 gap-y-1">
+              {intro.perfectFor.map((p, i) => (
+                <li key={p}>
+                  {p}
+                  {i < intro.perfectFor.length - 1 && (
+                    <span className="ml-2 text-stone" aria-hidden="true">
+                      ·
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <a
+            href="/#cabin"
+            className={cn(
+              button.link,
+              "mt-6 inline-flex min-h-11 items-center text-forest decoration-stone",
+            )}
+          >
+            Explore the cabin
+          </a>
         </div>
       </Container>
     </section>
@@ -229,7 +241,7 @@ export function Reviews() {
     <section id="reviews" aria-labelledby="reviews-title" className="py-16 sm:py-24">
       <Container>
         <h2 id="reviews-title" className="type-heading max-w-2xl">
-          Guests can't stop talking about the view
+          What guests love about Cliffside
         </h2>
         <ReviewList className="mt-5" />
         <BookButton className="mt-10" />
@@ -267,7 +279,7 @@ export function CabinTour() {
     <section id="cabin" aria-labelledby="cabin-title" className="py-16 sm:py-24">
       <Container>
         <h2 id="cabin-title" className="type-heading">
-          Explore Cliffside
+          Take a look inside
         </h2>
         <div className="mt-10 space-y-14">
           {cabinTour.map((c, i) => (
@@ -470,7 +482,7 @@ export function Faq() {
     <section id="faq" aria-labelledby="faq-title" className="bg-cream py-16 sm:py-24">
       <Container className="grid gap-8 lg:grid-cols-12 lg:gap-14">
         <h2 id="faq-title" className="type-heading lg:col-span-4">
-          Questions
+          Before you book
         </h2>
         <Accordion type="single" collapsible className="border-t border-stone lg:col-span-8">
           {faqs.map((f) => (

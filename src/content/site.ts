@@ -46,17 +46,9 @@ export const nav = [
 ];
 
 export const intro = {
-  title: "Not just a place to stay. A place to get away.",
-  text: "Wake up to layers of Blue Ridge mountains. Spend the day exploring Leatherwood. Come back for a sunset soak in your private hot tub. Then settle in beside the fireplace and let the mountains do the rest.",
-  perfectFor: [
-    "Couples' getaways",
-    "Dog-friendly escapes",
-    "Small families",
-    "Outdoor adventures",
-    "Special weekends",
-    "Fall foliage trips",
-    "Cozy winter escapes",
-  ],
+  title: "Two bedrooms. A mountain view all to yourself.",
+  text: "Settle into a log cabin for four in gated Leatherwood Mountains Resort. Share breakfast on the porch, explore the trails, then come home to your private hot tub and stone gas fireplace. An upstairs king suite and a main-level queen bedroom give everyone room to unwind.",
+  perfectFor: ["Couples' getaways", "Dog-friendly escapes", "Small families", "Outdoor adventures"],
 };
 
 export const reasons: { title: string; text: string; photo: Photo }[] = [
@@ -156,8 +148,8 @@ export const cabinTour: { title: string; text: string; photos: Photo[] }[] = [
 ];
 
 export const leatherwood = {
-  title: "Your cabin is part of something bigger",
-  text: "Leatherwood Mountains gives you the best of both worlds: a private mountain retreat with access to trails, horseback riding, fishing, tubing and other outdoor activities.",
+  title: "Explore Leatherwood Mountains",
+  text: "Step beyond the cabin for hiking, horseback riding, fishing and tubing at Leatherwood Mountains Resort. Ask the resort about activity availability, reservations and any additional fees when planning your stay.",
   cards: [
     {
       title: "Horseback riding",
@@ -200,19 +192,19 @@ export const location = {
 };
 
 export const pets = {
-  title: "Bring the whole family",
-  text: "Cliffside welcomes pets, so your mountain getaway doesn't have to mean leaving part of the family behind.",
+  title: "A getaway with your pet",
+  text: "Bring your companion along for porch mornings and mountain air. Up to two pets are welcome; include them when arranging your reservation.",
   fee: "$75 per pet, up to 2 pets.",
 };
 
 export const arrival = [
-  "Cliffside has paved access to the cabin. Because you're in the mountains, some roads within Leatherwood are steep and winding. We provide detailed arrival directions so you can reach the cabin comfortably and confidently.",
-  "Please use our provided arrival directions rather than relying solely on GPS.",
+  "Cliffside has paved access to the cabin. Because you're in the mountains, some roads within Leatherwood are steep and winding. Follow the arrival directions supplied for your reservation.",
+  "Use Google Maps to explore the area, but follow your arrival directions for the final drive to the cabin.",
 ];
 
 export const finalCta = {
   title: "Ready for a mountain escape?",
-  text: "Check your dates and start planning your stay at Cliffside.",
+  text: "Choose your dates on the Leatherwood Mountains booking site to check availability and pricing.",
 };
 
 export const amenityHighlights = [

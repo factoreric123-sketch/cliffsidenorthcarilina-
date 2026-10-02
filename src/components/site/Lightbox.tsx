@@ -86,12 +86,12 @@ export function Lightbox({
 
   // Preload neighbours so swiping feels instant.
   useEffect(() => {
-    if (index === null) return;
+    if (!open || index === null) return;
     for (const d of [1, -1]) {
       const p = list[(index + d + list.length) % list.length];
       if (p) new Image().src = imageUrl(p.src, 1600);
     }
-  }, [index, list]);
+  }, [open, index, list]);
 
   const current = index !== null ? list[index] : null;
 
@@ -122,7 +122,7 @@ export function Lightbox({
                 className="inline-flex h-11 items-center gap-2 rounded-lg px-3 text-sm font-semibold hover:bg-white/10"
               >
                 <Grid2x2 className="size-4" aria-hidden="true" />
-                All photos
+                Photo categories
               </button>
             ) : (
               <p className="px-2 text-lg font-bold">Gallery</p>
@@ -208,7 +208,7 @@ export function Lightbox({
             /* Category grid */
             <div className="flex min-h-0 flex-1 flex-col">
               <div
-                role="tablist"
+                role="group"
                 aria-label="Photo categories"
                 className="snap-row shrink-0 gap-2 px-4 pb-4 sm:px-6"
               >
@@ -221,11 +221,10 @@ export function Lightbox({
                     <button
                       key={c}
                       type="button"
-                      role="tab"
-                      aria-selected={category === c}
+                      aria-pressed={category === c}
                       onClick={() => setCategory(c)}
                       className={cn(
-                        "shrink-0 rounded-lg border px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors",
+                        "min-h-11 shrink-0 rounded-lg border px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors",
                         category === c
                           ? "border-ivory bg-ivory text-forest"
                           : "border-white/20 text-ivory/80 hover:border-white/50 hover:text-ivory",

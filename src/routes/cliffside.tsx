@@ -21,10 +21,16 @@ export const Route = createFileRoute("/cliffside")({
 function CliffsidePage() {
   return (
     <>
+      <a
+        href="#main"
+        className="sr-only z-50 rounded-lg bg-forest px-4 py-2 text-ivory focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+      >
+        Skip to content
+      </a>
       <Header solid current="/cliffside" />
       <PropertyPage />
       <Footer />
-      <MobileBookingBar />
+      <MobileBookingBar alwaysVisible />
     </>
   );
 }

@@ -12,16 +12,17 @@ export function Hero() {
     >
       <div className="absolute inset-0 -z-10">
         <Img photo={photos.mistyRidges} priority />
-        <div className="absolute inset-0 bg-black/35 sm:bg-black/20" />
+        <div className="absolute inset-0 bg-linear-to-t from-forest-deep/95 via-forest-deep/35 to-forest-deep/40" />
       </div>
 
       <Container className="pt-28 pb-14 sm:pb-20">
         <p className="text-[0.9375rem] font-medium text-white/85">{site.locationLine}</p>
         <h1 id="hero-title" className="type-title mt-3 max-w-[16ch] text-white">
-          Your private mountain escape
+          Your Blue Ridge cabin, above it all.
         </h1>
         <p className="mt-5 max-w-[46ch] text-lg leading-relaxed text-white/90 sm:text-xl">
-          Spectacular Blue Ridge views. A private hot tub. A cozy log cabin made for slowing down.
+          Long-range mountain views, a private hot tub and room for four. Come for the scenery. Stay
+          for the quiet.
         </p>
         <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-[0.9375rem] font-medium text-white/90">
           {quickFacts.map(({ Icon, label }) => (
@@ -39,6 +40,9 @@ export function Hero() {
             See photos
           </a>
         </div>
+        <p className="mt-4 text-sm text-white/85">
+          Check dates and pricing with Leatherwood Mountains Resort.
+        </p>
       </Container>
     </section>
   );

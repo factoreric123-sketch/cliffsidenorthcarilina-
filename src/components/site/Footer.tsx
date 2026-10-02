@@ -53,15 +53,15 @@ export function Footer() {
 }
 
 /** Booking link pinned to the bottom of small screens, once the hero has scrolled away. */
-export function MobileBookingBar() {
-  const [visible, setVisible] = useState(false);
+export function MobileBookingBar({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
+  const [visible, setVisible] = useState(alwaysVisible);
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.7);
+    const onScroll = () => setVisible(alwaysVisible || window.scrollY > window.innerHeight * 0.7);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [alwaysVisible]);
 
   return (
     <div
@@ -71,12 +71,16 @@ export function MobileBookingBar() {
       )}
       aria-hidden={!visible}
     >
-      <div className="flex items-center justify-between gap-4">
-        <p className="type-caption">Booking opens on leatherwoodmountains.com</p>
+      <div className="flex items-center justify-between gap-3">
+        <p className="type-caption min-w-0 text-xs">
+          Book with
+          <br />
+          Leatherwood Mountains
+        </p>
         <a
           href={site.bookingUrl}
           tabIndex={visible ? 0 : -1}
-          className={cn(button.primary, "shrink-0 px-4 py-2.5")}
+          className={cn(button.primary, "shrink-0 px-3 py-3")}
         >
           Check availability
         </a>

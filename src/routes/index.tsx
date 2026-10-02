@@ -14,9 +14,7 @@ import {
   Location,
   Pets,
   PhotoGallery,
-  Reasons,
   Reviews,
-  SlowingDown,
 } from "@/components/site/Sections";
 import { imageUrl, photos } from "@/content/photos";
 
@@ -61,15 +59,13 @@ function Index() {
       <main id="main">
         <Hero />
         <Intro />
-        <Reasons />
-        <Reviews />
-        <SlowingDown />
         <CabinTour />
+        <Reviews />
+        <Amenities />
         <Leatherwood />
         <Location />
         <Pets />
         <PhotoGallery />
-        <Amenities />
         <Arrival />
         <Faq />
         <FinalCta />
