@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 import { Img } from "./primitives";
 
-type Category = (typeof galleryCategories)[number];
+export type Category = (typeof galleryCategories)[number];
 
 function PhotoButton({
   photo,
@@ -41,11 +41,14 @@ export function Lightbox({
   open,
   onOpenChange,
   startIndex,
+  startCategory = "All",
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  /** null opens the thumbnail grid; a number opens that photo directly. */
+  /** null opens the thumbnail grid; a number opens that photo (in the "All" list) directly. */
   startIndex: number | null;
+  /** Category the thumbnail grid opens on. */
+  startCategory?: Category;
 }) {
   const [category, setCategory] = useState<Category>("All");
   const [index, setIndex] = useState<number | null>(startIndex);
@@ -54,11 +57,11 @@ export function Lightbox({
 
   useEffect(() => {
     if (open) {
-      setCategory("All");
+      setCategory(startCategory);
       setIndex(startIndex);
       setCameFromGrid(false);
     }
-  }, [open, startIndex]);
+  }, [open, startIndex, startCategory]);
 
   const list = useMemo(
     () =>

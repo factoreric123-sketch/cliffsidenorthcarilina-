@@ -16,14 +16,14 @@ export function Hero() {
       </div>
 
       <Container className="pt-28 pb-14 sm:pb-20">
-        <h1 id="hero-title" className="type-title max-w-[24ch] text-white">
-          A two-bedroom log cabin in Leatherwood Mountains
+        <p className="text-[0.9375rem] font-medium text-white/85">{site.locationLine}</p>
+        <h1 id="hero-title" className="type-title mt-3 max-w-[16ch] text-white">
+          Your private mountain escape
         </h1>
-        <p className="mt-5 max-w-[52ch] text-lg leading-relaxed text-white/90">
-          Cliffside is inside the gated Leatherwood Mountains Resort in North Carolina's High
-          Country, about 30 minutes from Boone and Blowing Rock. It sleeps 4, has a private hot tub
-          and a stone gas fireplace, and pets are welcome.
+        <p className="mt-5 max-w-[46ch] text-lg leading-relaxed text-white/90 sm:text-xl">
+          Spectacular Blue Ridge views. A private hot tub. A cozy log cabin made for slowing down.
         </p>
+        <p className="mt-5 text-[0.9375rem] font-medium text-white/85">{site.quickFacts}</p>
         <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
           <a href={site.bookingUrl} className={button.primary}>
             Check availability
@@ -32,9 +32,6 @@ export function Hero() {
             See photos
           </a>
         </div>
-        <p className="type-caption mt-4 text-white/75">
-          Bookings are made on leatherwoodmountains.com.
-        </p>
       </Container>
     </section>
   );

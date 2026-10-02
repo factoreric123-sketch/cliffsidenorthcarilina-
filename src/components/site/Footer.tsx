@@ -14,8 +14,7 @@ export function Footer() {
             <p className="font-display text-2xl font-semibold tracking-[0.14em]">CLIFFSIDE</p>
             <p className="mt-1 text-ivory/80">{site.region}</p>
             <p className="mt-6 max-w-[44ch] text-ivory/90">
-              Cliffside is managed and booked by {site.manager}. For questions about dates or your
-              stay, email{" "}
+              {site.bookingNote} For questions about dates or your stay, email{" "}
               <a
                 href={`mailto:${site.managerEmail}`}
                 className={cn(button.link, "text-ivory decoration-white/40")}

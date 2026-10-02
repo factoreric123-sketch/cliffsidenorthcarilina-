@@ -8,9 +8,10 @@ import { cn } from "@/lib/utils";
 
 import { Lightbox } from "./Lightbox";
 import { Container } from "./primitives";
-import { AboutText, AmenityList, LocationDetails, PolicyList, RoomList } from "./Sections";
+import { AmenityList, ArrivalAndRules, CabinText, LocationDetails, ReviewList } from "./Sections";
+import { intro } from "@/content/site";
 
-const tabs = ["Description", "Amenities", "Location", "House rules"] as const;
+const tabs = ["Description", "Reviews", "Amenities", "Location", "House rules"] as const;
 type Tab = (typeof tabs)[number];
 
 const iconButton =
@@ -146,7 +147,7 @@ export function PropertyPage() {
         <div className="mt-10 border-b border-stone pb-8">
           <h1 className="type-title">Cliffside</h1>
           <p className="mt-3">2 bedrooms · 2 bathrooms · Sleeps 4 · 2,279 sq ft · Pets welcome</p>
-          <p className="type-caption mt-1">{site.region}</p>
+          <p className="type-caption mt-1">{site.locationLine}</p>
         </div>
 
         <TabsPrimitive.Root defaultValue="Description" className="mt-8">
@@ -164,9 +165,12 @@ export function PropertyPage() {
 
           <TabsPrimitive.Content value="Description" className="pt-8 outline-none">
             <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
-              <AboutText />
-              <RoomList />
+              <p className="max-w-[56ch] text-lg leading-relaxed">{intro.text}</p>
+              <CabinText />
             </div>
+          </TabsPrimitive.Content>
+          <TabsPrimitive.Content value="Reviews" className="pt-8 outline-none">
+            <ReviewList />
           </TabsPrimitive.Content>
           <TabsPrimitive.Content value="Amenities" className="pt-8 outline-none">
             <AmenityList />
@@ -175,7 +179,7 @@ export function PropertyPage() {
             <LocationDetails />
           </TabsPrimitive.Content>
           <TabsPrimitive.Content value="House rules" className="pt-8 outline-none">
-            <PolicyList />
+            <ArrivalAndRules />
           </TabsPrimitive.Content>
         </TabsPrimitive.Root>
       </Container>

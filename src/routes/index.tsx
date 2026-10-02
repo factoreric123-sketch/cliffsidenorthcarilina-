@@ -4,13 +4,19 @@ import { Footer, MobileBookingBar } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
 import {
-  About,
   Amenities,
-  Cabin,
+  Arrival,
+  CabinTour,
   Faq,
-  HouseRules,
+  FinalCta,
+  Intro,
+  Leatherwood,
   Location,
-  Resort,
+  Pets,
+  PhotoGallery,
+  Reasons,
+  Reviews,
+  SlowingDown,
 } from "@/components/site/Sections";
 import { imageUrl, photos } from "@/content/photos";
 
@@ -18,14 +24,17 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       {
-        title: "Cliffside — Log cabin in Leatherwood Mountains, NC",
+        title: "Cliffside — Private mountain escape in Leatherwood Mountains, NC",
       },
       {
         name: "description",
         content:
-          "Cliffside is a two-bedroom, two-bath log cabin for up to 4 inside the gated Leatherwood Mountains Resort, NC. Private hot tub, stone gas fireplace, long-range Blue Ridge views, pets welcome. About 30 minutes from Boone and Blowing Rock.",
+          "Cliffside is a cozy log cabin with long-range Blue Ridge views and a private hot tub inside the gated Leatherwood Mountains Resort in Ferguson, NC. Sleeps 4, pet friendly, about 30 minutes from Boone and Blowing Rock.",
       },
-      { property: "og:title", content: "Cliffside — Log cabin in Leatherwood Mountains, NC" },
+      {
+        property: "og:title",
+        content: "Cliffside — Private mountain escape in Leatherwood Mountains, NC",
+      },
       {
         property: "og:description",
         content:
@@ -51,13 +60,19 @@ function Index() {
       <Header />
       <main id="main">
         <Hero />
-        <About />
-        <Cabin />
-        <Amenities />
-        <Resort />
+        <Intro />
+        <Reasons />
+        <Reviews />
+        <SlowingDown />
+        <CabinTour />
+        <Leatherwood />
         <Location />
-        <HouseRules />
+        <Pets />
+        <PhotoGallery />
+        <Amenities />
+        <Arrival />
         <Faq />
+        <FinalCta />
       </main>
       <Footer />
       <MobileBookingBar />

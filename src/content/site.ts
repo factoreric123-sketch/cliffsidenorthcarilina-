@@ -4,15 +4,24 @@ import { photos, type Photo } from "./photos";
  * All site copy lives here. Sources:
  * - Property facts, amenities, rules: the owner's brief and the Leatherwood Mountains listing
  *   (https://leatherwoodmountains.com/vrp/unit/Cliffside-10-15).
+ * - Positioning, headlines and arrival wording: the owner's
+ *   "Cliffside Landing Page Rewrite & Conversion Recommendations" (Oct 2026).
  * - Pet fee: the Leatherwood "Pet-friendly unit" graphic (public/images/cliffside/28.png).
+ * - Reviews and rating: verified guest reviews on the Expedia/Vrbo listing (reviewsUrl below),
+ *   checked Oct 1, 2026. Re-check the rating and count before changing them.
+ * - Sunset from the deck: a verified guest review and the host's Booking.com description.
  * Don't add claims here without a source.
  */
 
 export const site = {
   name: "Cliffside",
   region: "Leatherwood Mountains, North Carolina",
+  locationLine: "Cliffside at Leatherwood Mountains · Ferguson, North Carolina",
+  quickFacts: "Sleeps 4 · 2 bedrooms · 2 baths · Private hot tub · Pet friendly",
   /** Bookings are made on the property manager's site. */
   bookingUrl: "https://leatherwoodmountains.com/vrp/unit/Cliffside-10-15",
+  bookingNote:
+    "Cliffside is professionally managed and booked through Leatherwood Mountains Resort.",
   manager: "Leatherwood Mountains",
   managerEmail: "info@leatherwoodmountains.com",
   mapsUrl:
@@ -21,68 +30,181 @@ export const site = {
 
 export const nav = [
   { label: "The cabin", href: "/#cabin" },
+  { label: "Reviews", href: "/#reviews" },
+  { label: "Leatherwood", href: "/#leatherwood" },
   { label: "Photos", href: "/cliffside" },
-  { label: "Amenities", href: "/#amenities" },
-  { label: "Location", href: "/#location" },
   { label: "Questions", href: "/#faq" },
 ];
 
-export const about = [
-  "Cliffside is a two-story log cabin inside Leatherwood Mountains Resort, a gated community in North Carolina's High Country. From the deck and the covered porch you look out over long-range Blue Ridge views.",
-  "It's set up for a couple or a small family, and pets are welcome. The cabin has paved road access, so getting there is easy in any season.",
+export const intro = {
+  title: "Not just a place to stay. A place to get away.",
+  text: "Wake up to layers of Blue Ridge mountains. Spend the day exploring Leatherwood. Come back for a sunset soak in your private hot tub. Then settle in beside the fireplace and let the mountains do the rest.",
+  perfectFor: [
+    "Couples' getaways",
+    "Dog-friendly escapes",
+    "Small families",
+    "Outdoor adventures",
+    "Special weekends",
+    "Fall foliage trips",
+    "Cozy winter escapes",
+  ],
+};
+
+export const reasons: { title: string; text: string; photo: Photo }[] = [
+  {
+    title: "Mountain views",
+    text: "Long-range Blue Ridge scenery from the cabin and deck.",
+    photo: photos.summerView,
+  },
+  {
+    title: "Private hot tub",
+    text: "Soak under the stars while taking in the mountain landscape.",
+    photo: photos.hotTubJets,
+  },
+  {
+    title: "Cozy fireplace",
+    text: "A warm, inviting place to unwind after a day outside.",
+    photo: photos.stoneFireplace,
+  },
+  {
+    title: "Private and peaceful",
+    text: "A quiet log cabin in the trees, inside a gated resort.",
+    photo: photos.exteriorFront,
+  },
+  {
+    title: "Pet friendly",
+    text: "Bring your four-legged family member along.",
+    photo: photos.frontPorch,
+  },
+  {
+    title: "Leatherwood Mountains",
+    text: "Trails, horseback riding, fishing, pool, tennis and more.",
+    photo: photos.horseback,
+  },
 ];
 
-export const facts: { term: string; detail: string }[] = [
-  { term: "Bedrooms", detail: "2: a king upstairs, a queen on the main level" },
-  { term: "Bathrooms", detail: "2 full" },
-  { term: "Sleeps", detail: "4" },
-  { term: "Size", detail: "2,279 sq ft" },
-  { term: "Pets", detail: "Welcome, $75 per pet, up to 2" },
-  { term: "Check-in / out", detail: "After 4:00 PM / before 11:00 AM" },
+export const reviewSummary = {
+  score: "9.6 out of 10",
+  count: 42,
+  source: "Expedia and Vrbo",
+  url: "https://www.expedia.com/Ferguson-Hotels-Pet-Friendly-Cabin.h21863690.Hotel-Information",
+};
+
+/** Short excerpts from verified 10/10 reviews on the listing above. */
+export const reviews: { quote: string; name: string; stay: string }[] = [
+  {
+    quote: "Relaxing in the jacuzzi while taking in the view was amazing.",
+    name: "Carrie D.",
+    stay: "Stayed Oct 2024",
+  },
+  {
+    quote: "The sunset views off the deck were wonderful! Everything was clean and cozy.",
+    name: "Jessica G.",
+    stay: "Stayed Nov 2024",
+  },
+  {
+    quote: "The cabin is really cozy, private, the view from the porch and hot tub is wonderful.",
+    name: "Marius I.",
+    stay: "Stayed Aug 2020",
+  },
+  {
+    quote: "We had the perfect time being able to just be us on our anniversary.",
+    name: "David W.",
+    stay: "Stayed Jan 2025",
+  },
 ];
 
-export const floors: { title: string; rooms: { name: string; text: string }[]; photos: Photo[] }[] =
-  [
+export const petReview = {
+  quote: "My wife, puppy and I had a great stay!",
+  name: "Ryan T.",
+  stay: "Stayed Nov 2023",
+};
+
+export const slowingDown = [
+  "Morning coffee overlooking the mountains.",
+  "Afternoons exploring Leatherwood.",
+  "Sunset from the deck.",
+  "A soak in the hot tub.",
+  "A fire and a glass of wine at night.",
+];
+
+export const cabinTour: { title: string; text: string; photos: Photo[] }[] = [
+  {
+    title: "Upstairs",
+    text: "A private primary suite with a king bed, double vanity, walk-in shower and a two-person whirlpool tub.",
+    photos: [photos.primarySuite, photos.primaryBath],
+  },
+  {
+    title: "Main level",
+    text: "A comfortable gathering space with the stone gas fireplace, a fully equipped kitchen, and the second bedroom with a queen bed.",
+    photos: [photos.livingFireplace, photos.kitchen, photos.guestBedroom],
+  },
+  {
+    title: "Outdoor living",
+    text: "Your deck, mountain views and private hot tub are the heart of the experience. The covered porch also has a gas grill and an outdoor dining table.",
+    photos: [photos.hotTubView, photos.porchDining],
+  },
+];
+
+export const leatherwood = {
+  title: "Your cabin is part of something bigger",
+  text: "Leatherwood Mountains gives you the best of both worlds: a private mountain retreat with access to trails, horseback riding, fishing, tubing and other outdoor activities.",
+  cards: [
     {
-      title: "Upper level",
-      rooms: [
-        {
-          name: "Primary suite",
-          text: "King bed, double vanity, walk-in shower, and a two-person whirlpool tub.",
-        },
-      ],
-      photos: [photos.primarySuite, photos.primaryBath],
+      title: "Horseback riding",
+      text: "Explore the mountains on horseback.",
+      photo: photos.horseback,
     },
     {
-      title: "Main level",
-      rooms: [
-        {
-          name: "Living room",
-          text: "Set around a stone gas fireplace, with a Roku Smart TV and room for everyone to sit.",
-        },
-        {
-          name: "Kitchen and dining",
-          text: "Full-size appliances, a dishwasher, and both drip and single-serve coffee makers. The dining table is by the windows.",
-        },
-        {
-          name: "Guest bedroom",
-          text: "Queen bed and mountain views, a few steps from the living room and kitchen.",
-        },
-      ],
-      photos: [photos.livingFireplace, photos.kitchen, photos.dining, photos.guestBedroom],
+      title: "Trails and adventure",
+      text: "Hike, fish, tube and explore.",
+      photo: photos.resortMeadow,
     },
     {
-      title: "Porch and deck",
-      rooms: [
-        {
-          name: "Covered porch",
-          text: "The private hot tub, Adirondack chairs, a gas grill, and an outdoor dining table.",
-        },
-        { name: "Deck", text: "Uncovered, facing the mountains." },
-      ],
-      photos: [photos.hotTubView, photos.porchDining, photos.deckView],
+      title: "Slow down",
+      text: "Enjoy the pool, tennis, scenic drives and peaceful mountain surroundings.",
+      photo: photos.resortPool,
     },
-  ];
+  ],
+};
+
+export const location = {
+  title: "Secluded enough to escape. Close enough to explore.",
+  places: [
+    {
+      place: "Boone",
+      time: "About 30 minutes",
+      text: "Restaurants, shopping, Appalachian State and downtown.",
+    },
+    {
+      place: "Blowing Rock",
+      time: "About 30 minutes",
+      text: "Mountain-town dining, shopping and outdoor activities.",
+    },
+    {
+      place: "Blue Ridge Parkway",
+      time: "Easy access",
+      text: "One of America's most scenic drives.",
+    },
+  ],
+  closing: "Return to your private mountain retreat at the end of the day.",
+};
+
+export const pets = {
+  title: "Bring the whole family",
+  text: "Cliffside welcomes pets, so your mountain getaway doesn't have to mean leaving part of the family behind.",
+  fee: "$75 per pet, up to 2 pets.",
+};
+
+export const arrival = [
+  "Cliffside has paved access to the cabin. Because you're in the mountains, some roads within Leatherwood are steep and winding. We provide detailed arrival directions so you can reach the cabin comfortably and confidently.",
+  "Please use our provided arrival directions rather than relying solely on GPS.",
+];
+
+export const finalCta = {
+  title: "Ready for a mountain escape?",
+  text: "Check your dates and start planning your stay at Cliffside.",
+};
 
 export const amenityHighlights = [
   "Private hot tub",
@@ -166,34 +288,6 @@ export const amenityGroups: { title: string; items: string[] }[] = [
   },
 ];
 
-export const resortActivities = [
-  "Horseback riding",
-  "Hiking trails",
-  "Fishing",
-  "Tubing",
-  "Swimming in the communal pool",
-  "Tennis",
-  "Basketball court",
-  "Playground",
-  "Pond",
-  "On-site restaurant, when open",
-];
-
-export const resortPhotos: { photo: Photo; caption: string }[] = [
-  { photo: photos.horseback, caption: "Horseback riding" },
-  { photo: photos.resortPool, caption: "The communal pool" },
-  { photo: photos.restaurant, caption: "The on-site restaurant" },
-];
-
-export const driveTimes: { place: string; time: string }[] = [
-  { place: "Boone", time: "About 30 minutes" },
-  { place: "Blowing Rock", time: "About 30 minutes" },
-  { place: "Blue Ridge Parkway", time: "Easy access" },
-];
-
-export const nearby =
-  "Around the area you'll find waterfalls, winery tours, skiing and snowboarding, rafting, boating, antique shops, outlet shopping, museums, festivals, and restaurants.";
-
 export const policies: { term: string; detail: string }[] = [
   { term: "Check-in", detail: "After 4:00 PM" },
   { term: "Check-out", detail: "Before 11:00 AM" },
@@ -220,7 +314,10 @@ export const faqs: { q: string; a: string }[] = [
     q: "How many guests can stay?",
     a: "Up to 4: a king bed in the upstairs suite and a queen bed in the main-level bedroom.",
   },
-  { q: "Is the road to the cabin paved?", a: "Yes, the cabin has paved road access." },
+  {
+    q: "Is the road to the cabin paved?",
+    a: "Yes, Cliffside has paved access. Some roads within Leatherwood are steep and winding, so please follow the arrival directions we provide rather than GPS alone.",
+  },
   {
     q: "Is the property inside a gated community?",
     a: "Yes. Cliffside is inside the gated Leatherwood Mountains Resort.",

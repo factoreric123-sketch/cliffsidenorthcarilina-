@@ -1,4 +1,5 @@
 import { ChevronDown } from "lucide-react";
+import { useState } from "react";
 
 import {
   Accordion,
@@ -6,51 +7,77 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { photos } from "@/content/photos";
+import { galleryCategories, galleryPhotos, photos, type GalleryCategory } from "@/content/photos";
 import {
-  about,
   amenityGroups,
   amenityHighlights,
-  driveTimes,
-  facts,
+  arrival,
+  cabinTour,
   faqs,
-  floors,
-  nearby,
+  finalCta,
+  intro,
+  leatherwood,
+  location,
+  petReview,
+  pets,
   policies,
-  resortActivities,
-  resortPhotos,
+  reasons,
+  reviews,
+  reviewSummary,
   site,
+  slowingDown,
 } from "@/content/site";
 import { cn } from "@/lib/utils";
 
-import { button, Container, DetailList, Figure } from "./primitives";
+import { Lightbox } from "./Lightbox";
+import { button, Container, DetailList, Figure, Img } from "./primitives";
 
-/* ---------- Reusable content blocks (home sections and the /cliffside tabs) ---------- */
+/* ---------- Reusable blocks (home sections and the /cliffside tabs) ---------- */
 
-export function AboutText() {
+export function BookButton({ className }: { className?: string }) {
   return (
-    <div className="max-w-[60ch] space-y-4">
-      {about.map((p) => (
-        <p key={p}>{p}</p>
-      ))}
+    <a href={site.bookingUrl} className={cn(button.primary, className)}>
+      Check availability
+    </a>
+  );
+}
+
+export function ReviewList({ className }: { className?: string }) {
+  return (
+    <div className={className}>
+      <p>
+        Rated <strong>{reviewSummary.score}</strong> from {reviewSummary.count} verified guest
+        reviews on{" "}
+        <a href={reviewSummary.url} className={cn(button.link, "text-forest decoration-stone")}>
+          {reviewSummary.source}
+        </a>
+        .
+      </p>
+      <ul className="mt-8 grid gap-x-10 gap-y-8 md:grid-cols-2">
+        {reviews.map((r) => (
+          <li key={r.name} className="border-l-2 border-copper pl-5">
+            <figure>
+              <blockquote className="font-display text-[1.6rem] leading-snug text-forest">
+                “{r.quote}”
+              </blockquote>
+              <figcaption className="type-caption mt-3">
+                {r.name} · {r.stay} · 10/10
+              </figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
-export function RoomList({ className }: { className?: string }) {
+export function CabinText() {
   return (
-    <div className={cn("space-y-8", className)}>
-      {floors.map((floor) => (
-        <div key={floor.title}>
-          <h3 className="type-subheading">{floor.title}</h3>
-          <dl className="mt-2 space-y-2">
-            {floor.rooms.map((r) => (
-              <div key={r.name}>
-                <dt className="inline font-semibold">{r.name}: </dt>
-                <dd className="inline">{r.text}</dd>
-              </div>
-            ))}
-          </dl>
+    <div className="space-y-6">
+      {cabinTour.map((c) => (
+        <div key={c.title}>
+          <h3 className="type-subheading">{c.title}</h3>
+          <p className="mt-1">{c.text}</p>
         </div>
       ))}
     </div>
@@ -95,159 +122,322 @@ export function AmenityList() {
 
 export function LocationDetails() {
   return (
-    <div className="space-y-8">
-      <div className="max-w-[56ch] space-y-4">
-        <p>
-          Cliffside is inside Leatherwood Mountains Resort, a gated community in North Carolina's
-          High Country.
-        </p>
-        <p>{nearby}</p>
-        <p>
-          <a href={site.mapsUrl} className={cn(button.link, "text-forest decoration-stone")}>
-            Open the resort in Google Maps
-          </a>
-        </p>
+    <div>
+      <dl className="border-t border-stone">
+        {location.places.map((p) => (
+          <div
+            key={p.place}
+            className="grid gap-0.5 border-b border-stone py-4 sm:grid-cols-[minmax(9rem,13rem)_1fr] sm:gap-6"
+          >
+            <dt>
+              <span className="font-semibold text-forest">{p.place}</span>
+              <span className="type-caption block">{p.time}</span>
+            </dt>
+            <dd>{p.text}</dd>
+          </div>
+        ))}
+      </dl>
+      <p className="mt-6">{location.closing}</p>
+      <p className="mt-4">
+        <a href={site.mapsUrl} className={cn(button.link, "text-forest decoration-stone")}>
+          Open Leatherwood Mountains Resort in Google Maps
+        </a>
+      </p>
+    </div>
+  );
+}
+
+export function ArrivalAndRules() {
+  return (
+    <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
+      <div>
+        <h3 className="type-subheading">Getting there</h3>
+        <div className="mt-2 max-w-[56ch] space-y-3">
+          {arrival.map((p) => (
+            <p key={p}>{p}</p>
+          ))}
+        </div>
       </div>
       <div>
-        <h3 className="type-subheading mb-3">Driving times</h3>
-        <DetailList items={driveTimes.map((d) => ({ term: d.place, detail: d.time }))} />
+        <h3 className="type-subheading mb-3">House rules</h3>
+        <DetailList items={policies} />
       </div>
     </div>
   );
 }
 
-export function PolicyList() {
-  return <DetailList items={policies} className="max-w-3xl" />;
+/* ---------- Home page sections, in page order ---------- */
+
+export function Intro() {
+  return (
+    <section aria-labelledby="intro-title" className="py-16 sm:py-24">
+      <Container>
+        <div className="max-w-3xl">
+          <h2 id="intro-title" className="type-heading">
+            {intro.title}
+          </h2>
+          <p className="mt-6 text-xl leading-relaxed sm:text-[1.375rem]">{intro.text}</p>
+        </div>
+        <div className="mt-10 border-t border-stone pt-5">
+          <h3 className="type-label">Perfect for</h3>
+          <ul className="mt-2 flex flex-wrap gap-x-2 gap-y-1">
+            {intro.perfectFor.map((p, i) => (
+              <li key={p}>
+                {p}
+                {i < intro.perfectFor.length - 1 && (
+                  <span className="ml-2 text-stone" aria-hidden="true">
+                    ·
+                  </span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Container>
+    </section>
+  );
 }
 
-/* ---------- Home page sections ---------- */
-
-export function About() {
+export function Reasons() {
   return (
-    <section id="about" aria-labelledby="about-title" className="py-16 sm:py-24">
-      <Container className="grid gap-10 lg:grid-cols-12 lg:gap-14">
-        <div className="lg:col-span-6">
-          <h2 id="about-title" className="type-heading">
-            About Cliffside
-          </h2>
-          <div className="mt-5">
-            <AboutText />
+    <section aria-labelledby="reasons-title" className="bg-cream py-16 sm:py-24">
+      <Container>
+        <h2 id="reasons-title" className="type-heading">
+          Six reasons to book Cliffside
+        </h2>
+        <ul className="mt-10 grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-3">
+          {reasons.map((r) => (
+            <li key={r.title}>
+              <div className="aspect-[3/2] overflow-hidden rounded-lg">
+                <Img
+                  photo={r.photo}
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                />
+              </div>
+              <h3 className="type-subheading mt-3 sm:mt-4">{r.title}</h3>
+              <p className="mt-1 text-[0.9375rem] sm:text-base">{r.text}</p>
+            </li>
+          ))}
+        </ul>
+      </Container>
+    </section>
+  );
+}
+
+export function Reviews() {
+  return (
+    <section id="reviews" aria-labelledby="reviews-title" className="py-16 sm:py-24">
+      <Container>
+        <h2 id="reviews-title" className="type-heading max-w-2xl">
+          Guests can't stop talking about the view
+        </h2>
+        <ReviewList className="mt-5" />
+        <BookButton className="mt-10" />
+      </Container>
+    </section>
+  );
+}
+
+export function SlowingDown() {
+  return (
+    <section aria-labelledby="slow-title" className="bg-forest text-ivory">
+      <div className="grid lg:grid-cols-2">
+        <div className="aspect-[3/2] lg:aspect-auto">
+          <Img photo={photos.deckView} sizes="(min-width: 1024px) 50vw, 100vw" />
+        </div>
+        <div className="flex items-center px-5 py-14 sm:px-12 lg:px-16 lg:py-20">
+          <div>
+            <h2 id="slow-title" className="type-heading text-ivory">
+              Made for slowing down
+            </h2>
+            <ul className="mt-6 space-y-3 font-display text-[1.625rem] leading-snug sm:text-3xl">
+              {slowingDown.map((l) => (
+                <li key={l}>{l}</li>
+              ))}
+            </ul>
           </div>
-          <DetailList items={facts} className="mt-8" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function CabinTour() {
+  return (
+    <section id="cabin" aria-labelledby="cabin-title" className="py-16 sm:py-24">
+      <Container>
+        <h2 id="cabin-title" className="type-heading">
+          Explore Cliffside
+        </h2>
+        <div className="mt-10 space-y-14">
+          {cabinTour.map((c, i) => (
+            <div key={c.title}>
+              <div
+                className={cn(
+                  "grid gap-4",
+                  c.photos.length === 2 && "sm:grid-cols-2",
+                  c.photos.length === 3 && "sm:grid-cols-2 lg:grid-cols-3",
+                )}
+              >
+                {c.photos.map((p, j) => (
+                  <Figure
+                    key={p.src}
+                    photo={p}
+                    sizes={
+                      c.photos.length === 3
+                        ? "(min-width: 1024px) 33vw, 50vw"
+                        : "(min-width: 640px) 50vw, 100vw"
+                    }
+                    // On phones, show only the lead photo of each area to keep the tour short.
+                    className={cn(
+                      j > 0 && "hidden sm:block",
+                      i === 1 && j === 2 && "sm:hidden lg:block",
+                    )}
+                  />
+                ))}
+              </div>
+              <div className="mt-4 max-w-2xl">
+                <h3 className="type-subheading">{c.title}</h3>
+                <p className="mt-1">{c.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+export function Leatherwood() {
+  return (
+    <section
+      id="leatherwood"
+      aria-labelledby="leatherwood-title"
+      className="bg-cream py-16 sm:py-24"
+    >
+      <Container>
+        <div className="max-w-2xl">
+          <h2 id="leatherwood-title" className="type-heading">
+            {leatherwood.title}
+          </h2>
+          <p className="mt-5">{leatherwood.text}</p>
+        </div>
+        <ul className="mt-10 grid gap-x-6 gap-y-10 md:grid-cols-3">
+          {leatherwood.cards.map((c) => (
+            <li key={c.title}>
+              <div className="aspect-[3/2] overflow-hidden rounded-lg md:aspect-[4/5]">
+                <Img photo={c.photo} sizes="(min-width: 768px) 33vw, 100vw" />
+              </div>
+              <h3 className="type-subheading mt-4">{c.title}</h3>
+              <p className="mt-1">{c.text}</p>
+            </li>
+          ))}
+        </ul>
+        <BookButton className="mt-10" />
+      </Container>
+    </section>
+  );
+}
+
+export function Location() {
+  return (
+    <section id="location" aria-labelledby="location-title" className="py-16 sm:py-24">
+      <Container className="grid gap-8 lg:grid-cols-12 lg:gap-14">
+        <div className="lg:col-span-6">
+          <h2 id="location-title" className="type-heading">
+            {location.title}
+          </h2>
+          <div className="mt-8">
+            <LocationDetails />
+          </div>
         </div>
         <Figure
-          photo={photos.exteriorFront}
-          caption="Cliffside from outside, with the covered porch on the main level."
+          photo={photos.resortSunset}
+          caption="Leatherwood Mountains Resort and the ridges around it, at sunset."
           sizes="(min-width: 1024px) 50vw, 100vw"
-          className="order-first lg:order-none lg:col-span-6 lg:pt-2"
+          className="lg:col-span-6 lg:pt-2"
         />
       </Container>
     </section>
   );
 }
 
-export function Cabin() {
-  const [upper, main, outside] = floors;
+export function Pets() {
   return (
-    <section id="cabin" aria-labelledby="cabin-title" className="bg-cream py-16 sm:py-24">
+    <section aria-labelledby="pets-title" className="bg-cream py-16 sm:py-20">
+      <Container className="grid gap-8 md:grid-cols-2 md:gap-14">
+        <div>
+          <h2 id="pets-title" className="type-heading">
+            {pets.title}
+          </h2>
+          <p className="mt-5 max-w-[46ch]">{pets.text}</p>
+          <p className="mt-3 font-semibold">{pets.fee}</p>
+        </div>
+        <figure className="self-center border-l-2 border-copper pl-5">
+          <blockquote className="font-display text-[1.6rem] leading-snug text-forest">
+            “{petReview.quote}”
+          </blockquote>
+          <figcaption className="type-caption mt-3">
+            {petReview.name} · {petReview.stay} · 10/10
+          </figcaption>
+        </figure>
+      </Container>
+    </section>
+  );
+}
+
+export function PhotoGallery() {
+  const [open, setOpen] = useState(false);
+  const [category, setCategory] = useState<GalleryCategory>("The view");
+  const groups = galleryCategories.filter((c): c is GalleryCategory => c !== "All");
+
+  return (
+    <section id="photos" aria-labelledby="photos-title" className="py-16 sm:py-24">
       <Container>
-        <h2 id="cabin-title" className="type-heading">
-          The cabin, floor by floor
-        </h2>
-
-        {/* Upper level: one room, two photos. */}
-        {upper && (
-          <div className="mt-10 grid gap-6 lg:grid-cols-12 lg:gap-10">
-            <div className="lg:col-span-4">
-              <h3 className="type-subheading">{upper.title}</h3>
-              {upper.rooms.map((r) => (
-                <p key={r.name} className="mt-2">
-                  <span className="font-semibold">{r.name}.</span> {r.text}
-                </p>
-              ))}
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2 lg:col-span-8">
-              {upper.photos.map((p) => (
-                <Figure
-                  key={p.src}
-                  photo={p}
-                  caption={p.alt}
-                  sizes="(min-width: 640px) 33vw, 100vw"
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Main level: three rooms side by side, photos in a row beneath. */}
-        {main && (
-          <div className="mt-16 border-t border-stone pt-10">
-            <h3 className="type-subheading">{main.title}</h3>
-            <div className="mt-3 grid gap-5 md:grid-cols-3 md:gap-10">
-              {main.rooms.map((r) => (
-                <p key={r.name}>
-                  <span className="font-semibold">{r.name}.</span> {r.text}
-                </p>
-              ))}
-            </div>
-            <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-              {main.photos.map((p) => (
-                <Figure
-                  key={p.src}
-                  photo={p}
-                  caption={p.alt}
-                  sizes="(min-width: 1024px) 25vw, 50vw"
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Outside: the hot tub photo leads. */}
-        {outside && (
-          <div className="mt-16 grid gap-6 border-t border-stone pt-10 lg:grid-cols-3 lg:gap-8">
-            {outside.photos[0] && (
-              <Figure
-                photo={outside.photos[0]}
-                caption={outside.photos[0].alt}
-                sizes="(min-width: 1024px) 66vw, 100vw"
-                className="lg:col-span-2"
-              />
-            )}
-            <div>
-              <h3 className="type-subheading">{outside.title}</h3>
-              {outside.rooms.map((r) => (
-                <p key={r.name} className="mt-2">
-                  <span className="font-semibold">{r.name}.</span> {r.text}
-                </p>
-              ))}
-              <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-1">
-                {outside.photos.slice(1).map((p) => (
-                  <Figure
-                    key={p.src}
-                    photo={p}
-                    caption={p.alt}
-                    sizes="(min-width: 1024px) 30vw, 50vw"
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
-        <p className="mt-12">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <h2 id="photos-title" className="type-heading">
+            Photos
+          </h2>
           <a href="/cliffside" className={cn(button.link, "text-forest decoration-stone")}>
             See photos
           </a>
-        </p>
+        </div>
+        <ul className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+          {groups.map((g, i) => {
+            const inGroup = galleryPhotos.filter((p) => p.category === g);
+            const cover = inGroup[0];
+            if (!cover) return null;
+            return (
+              <li key={g} className={cn(i === 0 && "col-span-2 md:col-span-1")}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCategory(g);
+                    setOpen(true);
+                  }}
+                  className="group block w-full text-left"
+                >
+                  <div className="aspect-[3/2] overflow-hidden rounded-lg md:aspect-[4/5]">
+                    <Img photo={cover} sizes="(min-width: 1024px) 20vw, 50vw" />
+                  </div>
+                  <span className="mt-2 block font-semibold text-forest group-hover:underline">
+                    {g}
+                  </span>
+                  <span className="type-caption block">{inGroup.length} photos</span>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
       </Container>
+      <Lightbox open={open} onOpenChange={setOpen} startIndex={null} startCategory={category} />
     </section>
   );
 }
 
 export function Amenities() {
   return (
-    <section id="amenities" aria-labelledby="amenities-title" className="py-16 sm:py-24">
+    <section id="amenities" aria-labelledby="amenities-title" className="bg-cream py-16 sm:py-24">
       <Container className="grid gap-8 lg:grid-cols-12 lg:gap-14">
         <h2 id="amenities-title" className="type-heading lg:col-span-4">
           Amenities
@@ -260,80 +450,15 @@ export function Amenities() {
   );
 }
 
-export function Resort() {
+export function Arrival() {
   return (
-    <section
-      id="resort"
-      aria-labelledby="resort-title"
-      className="bg-forest py-16 text-ivory sm:py-24"
-    >
-      <Container>
-        <div className="grid gap-8 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-5">
-            <h2 id="resort-title" className="type-heading text-ivory">
-              Leatherwood Mountains Resort
-            </h2>
-            <p className="mt-5 max-w-[48ch] text-ivory/90">
-              Staying at Cliffside gives you access to the resort around it: a gated community with
-              miles of trails and the activities listed here.
-            </p>
-          </div>
-          <ul className="grid border-t border-white/20 sm:grid-cols-2 sm:gap-x-10 lg:col-span-7">
-            {resortActivities.map((a) => (
-              <li key={a} className="border-b border-white/20 py-2.5">
-                {a}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="snap-row -mx-5 mt-12 gap-4 px-5 sm:mx-0 sm:grid sm:grid-cols-3 sm:px-0">
-          {resortPhotos.map(({ photo, caption }) => (
-            <Figure
-              key={photo.src}
-              photo={photo}
-              caption={caption}
-              sizes="(min-width: 640px) 33vw, 100vw"
-              className="w-[78%] shrink-0 sm:w-auto [&_figcaption]:text-ivory/80"
-            />
-          ))}
-        </div>
-      </Container>
-    </section>
-  );
-}
-
-export function Location() {
-  return (
-    <section id="location" aria-labelledby="location-title" className="py-16 sm:py-24">
-      <Container className="grid gap-8 lg:grid-cols-12 lg:gap-14">
-        <Figure
-          photo={photos.resortSunset}
-          caption="Leatherwood Mountains Resort and the ridges around it, at sunset."
-          sizes="(min-width: 1024px) 58vw, 100vw"
-          className="lg:col-span-7"
-        />
-        <div className="lg:col-span-5">
-          <h2 id="location-title" className="type-heading">
-            Location
-          </h2>
-          <div className="mt-5">
-            <LocationDetails />
-          </div>
-        </div>
-      </Container>
-    </section>
-  );
-}
-
-export function HouseRules() {
-  return (
-    <section id="rules" aria-labelledby="rules-title" className="bg-cream py-16 sm:py-20">
+    <section id="rules" aria-labelledby="rules-title" className="py-16 sm:py-24">
       <Container>
         <h2 id="rules-title" className="type-heading">
-          House rules
+          Arrival and house rules
         </h2>
         <div className="mt-8">
-          <PolicyList />
+          <ArrivalAndRules />
         </div>
       </Container>
     </section>
@@ -342,7 +467,7 @@ export function HouseRules() {
 
 export function Faq() {
   return (
-    <section id="faq" aria-labelledby="faq-title" className="py-16 sm:py-24">
+    <section id="faq" aria-labelledby="faq-title" className="bg-cream py-16 sm:py-24">
       <Container className="grid gap-8 lg:grid-cols-12 lg:gap-14">
         <h2 id="faq-title" className="type-heading lg:col-span-4">
           Questions
@@ -357,6 +482,21 @@ export function Faq() {
             </AccordionItem>
           ))}
         </Accordion>
+      </Container>
+    </section>
+  );
+}
+
+export function FinalCta() {
+  return (
+    <section id="book" aria-labelledby="book-title" className="py-20 sm:py-28">
+      <Container>
+        <h2 id="book-title" className="type-heading">
+          {finalCta.title}
+        </h2>
+        <p className="mt-4 text-lg">{finalCta.text}</p>
+        <BookButton className="mt-8" />
+        <p className="type-caption mt-4">{site.bookingNote}</p>
       </Container>
     </section>
   );
