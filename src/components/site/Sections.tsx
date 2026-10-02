@@ -57,7 +57,7 @@ export function ReviewList({ className }: { className?: string }) {
         {reviews.map((r) => (
           <li key={r.name} className="border-l-2 border-copper pl-5">
             <figure>
-              <blockquote className="font-display text-[1.6rem] leading-snug text-forest">
+              <blockquote className="text-xl leading-snug font-medium text-forest">
                 “{r.quote}”
               </blockquote>
               <figcaption className="type-caption mt-3">
@@ -250,7 +250,7 @@ export function SlowingDown() {
             <h2 id="slow-title" className="type-heading text-ivory">
               Made for slowing down
             </h2>
-            <ul className="mt-6 space-y-3 font-display text-[1.625rem] leading-snug sm:text-3xl">
+            <ul className="mt-6 space-y-3 text-xl leading-snug font-medium sm:text-2xl">
               {slowingDown.map((l) => (
                 <li key={l}>{l}</li>
               ))}
@@ -374,7 +374,7 @@ export function Pets() {
           <p className="mt-3 font-semibold">{pets.fee}</p>
         </div>
         <figure className="self-center border-l-2 border-copper pl-5">
-          <blockquote className="font-display text-[1.6rem] leading-snug text-forest">
+          <blockquote className="text-xl leading-snug font-medium text-forest">
             “{petReview.quote}”
           </blockquote>
           <figcaption className="type-caption mt-3">

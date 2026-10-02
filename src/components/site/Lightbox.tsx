@@ -125,7 +125,7 @@ export function Lightbox({
                 All photos
               </button>
             ) : (
-              <p className="px-2 font-display text-2xl">Gallery</p>
+              <p className="px-2 text-lg font-bold">Gallery</p>
             )}
             {current && (
               <p className="ml-auto text-sm tabular-nums text-ivory/70" aria-live="polite">

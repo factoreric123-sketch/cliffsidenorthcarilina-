@@ -11,7 +11,7 @@ export function Footer() {
       <Container>
         <div className="grid gap-10 md:grid-cols-12">
           <div className="md:col-span-6">
-            <p className="font-display text-2xl font-semibold tracking-[0.14em]">CLIFFSIDE</p>
+            <p className="text-xl font-extrabold tracking-[0.2em]">CLIFFSIDE</p>
             <p className="mt-1 text-ivory/80">{site.region}</p>
             <p className="mt-6 max-w-[44ch] text-ivory/90">
               {site.bookingNote} For questions about dates or your stay, email{" "}

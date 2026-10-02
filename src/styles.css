@@ -4,11 +4,20 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Manrope variable font, latin subset (weights 400–800). */
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("/fonts/manrope-latin.woff2") format("woff2");
+}
+
 /*
  * Cliffside design system
  * Neutrals: ivory, cream, stone, charcoal, with forest green as the dark neutral.
  * Accent: copper, for actions and active states only.
- * Type: Cormorant Garamond for page and section headings, Manrope for everything else.
+ * Type: Manrope only (self-hosted in /public/fonts). Hierarchy comes from size and weight.
  * Shape: one 6px radius (rounded-lg), one 1px stone border, shadows only on overlays.
  */
 
@@ -47,7 +56,6 @@
   --color-charcoal: var(--charcoal);
   --color-stone: var(--stone);
 
-  --font-display: "Cormorant Garamond", Georgia, serif;
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
 }
 
@@ -142,22 +150,20 @@
 @layer components {
   /* Page title: the one h1 per page. */
   .type-title {
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    line-height: 1.04;
-    letter-spacing: -0.01em;
+    font-weight: 700;
+    font-size: clamp(2.25rem, 5.5vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
   }
   /* Section heading (h2). */
   .type-heading {
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: clamp(2rem, 3.6vw, 2.75rem);
-    line-height: 1.1;
+    font-weight: 700;
+    font-size: clamp(1.75rem, 3.2vw, 2.375rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
   }
-  /* Secondary heading (h3): sans, so it reads as a different level, not a smaller h2. */
+  /* Secondary heading (h3). */
   .type-subheading {
-    font-family: var(--font-sans);
     font-weight: 700;
     font-size: 1.0625rem;
     line-height: 1.4;

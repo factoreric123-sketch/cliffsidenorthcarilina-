@@ -31,7 +31,7 @@ export function Header({ solid = false, current }: { solid?: boolean; current?: 
     >
       <Container className="flex h-16 items-center justify-between gap-6 sm:h-18">
         <a href="/" className="leading-none text-white">
-          <span className="font-display text-2xl font-semibold tracking-[0.14em]">CLIFFSIDE</span>
+          <span className="text-xl font-extrabold tracking-[0.2em]">CLIFFSIDE</span>
           <span className="sr-only">, home</span>
         </a>
 
@@ -71,7 +71,7 @@ export function Header({ solid = false, current }: { solid?: boolean; current?: 
               <Dialog.Overlay className="fixed inset-0 z-50 bg-black/40 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
               <Dialog.Content className="fixed inset-y-0 right-0 z-50 flex w-full max-w-sm flex-col bg-forest px-6 pt-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] text-ivory shadow-xl duration-300 data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:animate-in data-[state=open]:slide-in-from-right">
                 <div className="flex h-12 items-center justify-between">
-                  <Dialog.Title className="font-display text-2xl font-semibold tracking-[0.14em] text-ivory">
+                  <Dialog.Title className="text-xl font-extrabold tracking-[0.2em] text-ivory">
                     CLIFFSIDE
                   </Dialog.Title>
                   <Dialog.Close
