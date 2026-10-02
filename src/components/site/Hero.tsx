@@ -36,7 +36,7 @@ export function Hero() {
             ))}
           </ul>
           <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
-            <a href={site.bookingUrl} className={button.primary}>
+            <a id="hero-booking" href={site.bookingUrl} className={button.primary}>
               Check availability
             </a>
             <a href="/cliffside" className={cn(button.link, "text-white decoration-white/50")}>

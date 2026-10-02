@@ -94,37 +94,18 @@ export function CabinText() {
 }
 
 export function AmenityList() {
-  const total = amenityGroups.reduce((n, g) => n + g.items.length, 0);
   return (
-    <div>
-      <ul className="grid border-t border-stone sm:grid-cols-2 sm:gap-x-10">
-        {amenityHighlights.map((a) => (
-          <li key={a} className="border-b border-stone py-2.5">
-            {a}
-          </li>
-        ))}
-      </ul>
-      <details className="group mt-8">
-        <summary className="inline-flex cursor-pointer list-none items-center gap-1.5 font-semibold text-forest underline decoration-stone decoration-2 underline-offset-4 hover:decoration-copper [&::-webkit-details-marker]:hidden">
-          Full amenity list ({total})
-          <ChevronDown
-            className="size-4 transition-transform group-open:rotate-180"
-            aria-hidden="true"
-          />
-        </summary>
-        <div className="mt-6 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-          {amenityGroups.map((g) => (
-            <div key={g.title}>
-              <h3 className="type-subheading">{g.title}</h3>
-              <ul className="mt-2 space-y-1 text-[0.9375rem]">
-                {g.items.map((i) => (
-                  <li key={i}>{i}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
+    <div className="grid gap-x-8 gap-y-7 sm:grid-cols-2 lg:grid-cols-3">
+      {[{ title: "At a glance", items: amenityHighlights }, ...amenityGroups].map((group) => (
+        <div key={group.title}>
+          <h3 className="type-subheading">{group.title}</h3>
+          <ul className="mt-3 space-y-2 text-base">
+            {group.items.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
         </div>
-      </details>
+      ))}
     </div>
   );
 }
@@ -300,7 +281,7 @@ export function CabinTour() {
             View all {galleryPhotos.length} photos
           </a>
         </div>
-        <div className="mt-7 grid gap-3 sm:grid-cols-3">
+        <div className="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-3">
           {tourPhotos.map((photo, i) => (
             <button
               key={photo.src}
@@ -310,7 +291,7 @@ export function CabinTour() {
               className={cn(
                 "group relative overflow-hidden rounded-lg bg-cream",
                 i === 0
-                  ? "aspect-[4/3] sm:col-span-2 sm:row-span-2 sm:aspect-auto"
+                  ? "col-span-2 aspect-[4/3] sm:col-span-2 sm:row-span-2 sm:aspect-auto"
                   : "aspect-[3/2]",
               )}
             >
@@ -352,7 +333,7 @@ export function Leatherwood() {
     <section
       id="leatherwood"
       aria-labelledby="leatherwood-title"
-      className="bg-cream py-12 sm:py-16"
+      className="bg-ivory py-12 sm:py-16"
     >
       <Container>
         <div className="max-w-2xl">
@@ -390,12 +371,25 @@ export function Location() {
             <LocationDetails />
           </div>
         </div>
-        <Figure
-          photo={photos.resortSunset}
-          caption="Leatherwood Mountains Resort and the ridges around it, at sunset."
-          sizes="(min-width: 1024px) 50vw, 100vw"
-          className="lg:col-span-6 lg:pt-2"
-        />
+        <figure className="lg:col-span-6">
+          <iframe
+            title="Area map: Leatherwood Mountains Resort near Boone and Blowing Rock"
+            src="https://maps.google.com/maps?q=Leatherwood+Mountains+Resort+Ferguson+NC&z=10&output=embed"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="aspect-[4/3] w-full rounded-lg border border-stone"
+          />
+          <figcaption className="type-caption mt-3">
+            Leatherwood Mountains Resort and the surrounding area. Use your reservation’s arrival
+            directions for the final drive.
+          </figcaption>
+          <a
+            href={site.mapsUrl}
+            className={cn(button.link, "mt-2 inline-flex min-h-11 items-center text-sm")}
+          >
+            Open the area map
+          </a>
+        </figure>
       </Container>
     </section>
   );

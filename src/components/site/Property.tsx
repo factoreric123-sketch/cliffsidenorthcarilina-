@@ -62,7 +62,29 @@ function PhotoViewer() {
 
   return (
     <div>
-      <div role="group" aria-label="Photo categories" className="mb-4 flex flex-wrap gap-2">
+      <label className="mb-4 flex items-center gap-3 text-sm font-semibold text-forest sm:hidden">
+        Photo category
+        <select
+          value={category}
+          onChange={(event) => {
+            const next = event.target.value as typeof category;
+            setCategory(next);
+            setIndex(next === "All" ? 0 : galleryPhotos.findIndex((p) => p.category === next));
+          }}
+          className="min-h-11 min-w-0 flex-1 rounded-lg border border-stone bg-ivory px-3"
+        >
+          {galleryCategories.map((c) => (
+            <option key={c} value={c}>
+              {c}
+            </option>
+          ))}
+        </select>
+      </label>
+      <div
+        role="group"
+        aria-label="Photo categories"
+        className="mb-4 hidden flex-wrap gap-2 sm:flex"
+      >
         {galleryCategories.map((c) => (
           <button
             key={c}
@@ -171,7 +193,12 @@ function PhotoViewer() {
         ))}
       </div>
 
-      <Lightbox open={fullscreen} onOpenChange={setFullscreen} startIndex={index} />
+      <Lightbox
+        open={fullscreen}
+        onOpenChange={setFullscreen}
+        startIndex={filteredIndices.indexOf(index)}
+        startCategory={category}
+      />
     </div>
   );
 }

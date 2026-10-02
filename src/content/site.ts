@@ -42,7 +42,7 @@ export const nav = [
   { label: "Reviews", href: "/#reviews" },
   { label: "Leatherwood", href: "/#leatherwood" },
   { label: "Photos", href: "/cliffside" },
-  { label: "Questions", href: "/#faq" },
+  { label: "Plan your stay", href: "/#faq" },
 ];
 
 export const intro = {

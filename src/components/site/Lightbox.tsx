@@ -45,7 +45,7 @@ export function Lightbox({
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  /** null opens the thumbnail grid; a number opens that photo (in the "All" list) directly. */
+  /** null opens the thumbnail grid; a number opens that photo in the startCategory list directly. */
   startIndex: number | null;
   /** Category the thumbnail grid opens on. */
   startCategory?: Category;

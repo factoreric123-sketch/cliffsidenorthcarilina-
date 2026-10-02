@@ -14,6 +14,23 @@ import { button, Container } from "./primitives";
 export function Header({ solid = false, current }: { solid?: boolean; current?: string }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [showBooking, setShowBooking] = useState(solid);
+
+  useEffect(() => {
+    const action = document.getElementById("hero-booking");
+    if (solid || !action) {
+      setShowBooking(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry) setShowBooking(!entry.isIntersecting);
+      },
+      { rootMargin: "-72px 0px 0px 0px" },
+    );
+    observer.observe(action);
+    return () => observer.disconnect();
+  }, [solid]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -36,7 +53,7 @@ export function Header({ solid = false, current }: { solid?: boolean; current?: 
         </a>
 
         <nav aria-label="Primary" className="hidden lg:block">
-          <ul className="flex items-center gap-7">
+          <ul className="flex items-center gap-5">
             {nav.map((item) => (
               <li key={item.href}>
                 <a
@@ -55,7 +72,13 @@ export function Header({ solid = false, current }: { solid?: boolean; current?: 
           {/* Hidden while the hero's own button is on screen: one primary action per view. */}
           <a
             href={site.bookingUrl}
-            className={cn(button.primary, "hidden py-2.5", (scrolled || solid) && "sm:inline-flex")}
+            tabIndex={showBooking ? undefined : -1}
+            aria-hidden={!showBooking}
+            className={cn(
+              button.primary,
+              "hidden py-2.5 sm:inline-flex transition-opacity",
+              !showBooking && "invisible pointer-events-none opacity-0",
+            )}
           >
             Check availability
           </a>
