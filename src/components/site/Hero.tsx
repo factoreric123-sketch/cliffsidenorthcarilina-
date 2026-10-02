@@ -8,11 +8,11 @@ export function Hero() {
   return (
     <section
       aria-labelledby="hero-title"
-      className="relative isolate flex min-h-[88svh] items-end bg-forest-deep text-white"
+      className="relative isolate flex min-h-[100svh] items-end bg-forest-deep text-white"
     >
       <div className="absolute inset-0 -z-10">
         <Img photo={photos.mistyRidges} priority />
-        <div className="absolute inset-0 bg-black/45" />
+        <div className="absolute inset-0 bg-black/35 sm:bg-black/20" />
       </div>
 
       <Container className="pt-28 pb-14 sm:pb-20">
