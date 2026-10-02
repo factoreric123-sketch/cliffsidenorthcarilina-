@@ -2,7 +2,7 @@ import * as TabsPrimitive from "@radix-ui/react-tabs";
 import { ChevronLeft, ChevronRight, Expand } from "lucide-react";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 
-import { galleryPhotos, imageSrcSet, imageUrl } from "@/content/photos";
+import { galleryCategories, galleryPhotos, imageSrcSet, imageUrl } from "@/content/photos";
 import { site } from "@/content/site";
 import { cn } from "@/lib/utils";
 
@@ -21,12 +21,22 @@ const iconButton =
 function PhotoViewer() {
   const [index, setIndex] = useState(0);
   const [fullscreen, setFullscreen] = useState(false);
+  const [category, setCategory] = useState<(typeof galleryCategories)[number]>("All");
   const stripRef = useRef<HTMLDivElement>(null);
   const touchX = useRef<number | null>(null);
   const count = galleryPhotos.length;
   const photo = galleryPhotos[index]!;
 
-  const go = (dir: 1 | -1) => setIndex((i) => (i + dir + count) % count);
+  const filteredIndices = galleryPhotos.flatMap((p, i) =>
+    category === "All" || p.category === category ? [i] : [],
+  );
+  const go = (dir: 1 | -1) =>
+    setIndex(
+      (i) =>
+        filteredIndices[
+          (filteredIndices.indexOf(i) + dir + filteredIndices.length) % filteredIndices.length
+        ] ?? i,
+    );
 
   // Keep the active thumbnail centred in the strip without moving the page.
   useEffect(() => {
@@ -52,6 +62,27 @@ function PhotoViewer() {
 
   return (
     <div>
+      <div role="group" aria-label="Photo categories" className="mb-4 flex flex-wrap gap-2">
+        {galleryCategories.map((c) => (
+          <button
+            key={c}
+            type="button"
+            aria-pressed={category === c}
+            onClick={() => {
+              setCategory(c);
+              setIndex(c === "All" ? 0 : galleryPhotos.findIndex((p) => p.category === c));
+            }}
+            className={cn(
+              "min-h-11 rounded-lg border px-3 py-2 text-sm font-semibold",
+              category === c
+                ? "border-forest bg-forest text-ivory"
+                : "border-stone text-forest hover:bg-cream",
+            )}
+          >
+            {c}
+          </button>
+        ))}
+      </div>
       <div
         role="region"
         aria-roledescription="carousel"
@@ -107,7 +138,7 @@ function PhotoViewer() {
       <p className="type-caption mt-2 flex justify-between gap-4">
         <span>{photo.alt}</span>
         <span aria-live="polite" className="shrink-0 tabular-nums">
-          {index + 1} of {count}
+          {filteredIndices.indexOf(index) + 1} of {filteredIndices.length}
         </span>
       </p>
 
@@ -119,6 +150,7 @@ function PhotoViewer() {
         {galleryPhotos.map((p, i) => (
           <button
             key={p.src}
+            hidden={!filteredIndices.includes(i)}
             type="button"
             onClick={() => setIndex(i)}
             aria-label={`Show photo ${i + 1}: ${p.alt}`}
@@ -157,7 +189,10 @@ export function PropertyPage() {
         </div>
 
         <TabsPrimitive.Root defaultValue="Description" className="mt-8">
-          <TabsPrimitive.List aria-label="Cabin details" className="snap-row border-b border-stone">
+          <TabsPrimitive.List
+            aria-label="Cabin details"
+            className="flex flex-wrap gap-x-2 border-b border-stone"
+          >
             {tabs.map((t) => (
               <TabsPrimitive.Trigger
                 key={t}

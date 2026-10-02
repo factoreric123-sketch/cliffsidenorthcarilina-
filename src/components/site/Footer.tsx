@@ -7,7 +7,7 @@ import { button, Container } from "./primitives";
 
 export function Footer() {
   return (
-    <footer className="bg-forest pt-14 pb-24 text-ivory sm:pb-12">
+    <footer className="border-t border-white/15 bg-forest pt-10 pb-24 text-ivory sm:pb-12">
       <Container>
         <div className="grid gap-10 md:grid-cols-12">
           <div className="md:col-span-6">
@@ -23,9 +23,6 @@ export function Footer() {
               </a>
               .
             </p>
-            <a href={site.bookingUrl} className={cn(button.primary, "mt-6")}>
-              Check availability
-            </a>
           </div>
           <nav aria-label="Footer" className="md:col-span-3 md:col-start-10">
             <ul className="space-y-2">

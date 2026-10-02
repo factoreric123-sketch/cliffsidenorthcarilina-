@@ -5,14 +5,12 @@ import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
 import {
   Amenities,
-  Arrival,
   CabinTour,
-  Faq,
   FinalCta,
   Intro,
   Leatherwood,
   Location,
-  Pets,
+  PlanStay,
   PhotoGallery,
   Reviews,
 } from "@/components/site/Sections";
@@ -64,10 +62,8 @@ function Index() {
         <Amenities />
         <Leatherwood />
         <Location />
-        <Pets />
         <PhotoGallery />
-        <Arrival />
-        <Faq />
+        <PlanStay />
         <FinalCta />
       </main>
       <Footer />

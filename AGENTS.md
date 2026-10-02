@@ -8,3 +8,7 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## Delivery
+
+After completing and validating requested changes, commit and push them to GitHub automatically. Include only task-related changes; preserve unrelated local files. Never force-push or rewrite published history.
