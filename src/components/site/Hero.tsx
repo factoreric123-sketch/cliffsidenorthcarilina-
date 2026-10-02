@@ -1,5 +1,5 @@
 import { photos } from "@/content/photos";
-import { site } from "@/content/site";
+import { quickFacts, site } from "@/content/site";
 import { cn } from "@/lib/utils";
 
 import { button, Container, Img } from "./primitives";
@@ -23,7 +23,14 @@ export function Hero() {
         <p className="mt-5 max-w-[46ch] text-lg leading-relaxed text-white/90 sm:text-xl">
           Spectacular Blue Ridge views. A private hot tub. A cozy log cabin made for slowing down.
         </p>
-        <p className="mt-5 text-[0.9375rem] font-medium text-white/85">{site.quickFacts}</p>
+        <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-[0.9375rem] font-medium text-white/90">
+          {quickFacts.map(({ Icon, label }) => (
+            <li key={label} className="flex items-center gap-2">
+              <Icon className="size-5 shrink-0" strokeWidth={1.75} aria-hidden="true" />
+              {label}
+            </li>
+          ))}
+        </ul>
         <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
           <a href={site.bookingUrl} className={button.primary}>
             Check availability

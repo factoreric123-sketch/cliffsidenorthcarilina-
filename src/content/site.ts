@@ -1,3 +1,5 @@
+import { Bath, BedDouble, PawPrint, Users, Waves, type LucideIcon } from "lucide-react";
+
 import { photos, type Photo } from "./photos";
 
 /*
@@ -17,7 +19,6 @@ export const site = {
   name: "Cliffside",
   region: "Leatherwood Mountains, North Carolina",
   locationLine: "Cliffside at Leatherwood Mountains · Ferguson, North Carolina",
-  quickFacts: "Sleeps 4 · 2 bedrooms · 2 baths · Private hot tub · Pet friendly",
   /** Bookings are made on the property manager's site. */
   bookingUrl: "https://leatherwoodmountains.com/vrp/unit/Cliffside-10-15",
   bookingNote:
@@ -27,6 +28,14 @@ export const site = {
   mapsUrl:
     "https://www.google.com/maps/search/?api=1&query=Leatherwood+Mountains+Resort%2C+North+Carolina",
 };
+
+export const quickFacts: { Icon: LucideIcon; label: string }[] = [
+  { Icon: Users, label: "Sleeps 4" },
+  { Icon: BedDouble, label: "2 bedrooms" },
+  { Icon: Bath, label: "2 baths" },
+  { Icon: Waves, label: "Private hot tub" },
+  { Icon: PawPrint, label: "Pet friendly" },
+];
 
 export const nav = [
   { label: "The cabin", href: "/#cabin" },
