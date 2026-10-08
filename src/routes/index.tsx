@@ -36,7 +36,7 @@ export const Route = createFileRoute("/")({
         content:
           "Two-bedroom log cabin inside Leatherwood Mountains Resort, NC. Sleeps 4, private hot tub, pets welcome.",
       },
-      { property: "og:image", content: imageUrl(photos.mistyRidges.src, 1280) },
+      { property: "og:image", content: imageUrl(photos.sunsetHotTub.src, 1280) },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

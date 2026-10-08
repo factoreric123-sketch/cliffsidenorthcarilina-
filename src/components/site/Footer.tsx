@@ -54,7 +54,15 @@ export function MobileBookingBar({ alwaysVisible = false }: { alwaysVisible?: bo
   const [visible, setVisible] = useState(alwaysVisible);
 
   useEffect(() => {
-    const onScroll = () => setVisible(alwaysVisible || window.scrollY > window.innerHeight * 0.7);
+    const onScroll = () => {
+      const action = document.getElementById("hero-booking");
+      setVisible(
+        alwaysVisible ||
+          (action
+            ? action.getBoundingClientRect().bottom < 0
+            : window.scrollY > window.innerHeight * 0.7),
+      );
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);

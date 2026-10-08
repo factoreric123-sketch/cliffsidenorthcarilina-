@@ -19,6 +19,12 @@ const LOCAL_WIDTHS = [640, 1280, 1920];
 const cabin = (n: string) => `${LOCAL_PREFIX}${n}`;
 
 export const photos = {
+  // Owner-supplied hero photograph; no generated imagery.
+  sunsetHotTub: {
+    src: cabin("sunset-hot-tub"),
+    alt: "Hot tub on the covered deck overlooking mountain ridges at sunset",
+    category: "Outdoor living",
+  },
   // Cliffside
   hotTubView: {
     src: cabin("01"),

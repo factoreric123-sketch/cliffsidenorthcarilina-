@@ -24,7 +24,7 @@ export function Header({ solid = false, current }: { solid?: boolean; current?: 
     }
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry) setShowBooking(!entry.isIntersecting);
+        if (entry) setShowBooking(!entry.isIntersecting && entry.boundingClientRect.top < 72);
       },
       { rootMargin: "-72px 0px 0px 0px" },
     );
@@ -33,7 +33,10 @@ export function Header({ solid = false, current }: { solid?: boolean; current?: 
   }, [solid]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => {
+      const photo = document.getElementById("hero-photo");
+      setScrolled(photo ? photo.getBoundingClientRect().bottom <= 72 : window.scrollY > 40);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -47,12 +50,12 @@ export function Header({ solid = false, current }: { solid?: boolean; current?: 
       )}
     >
       <Container className="flex h-16 items-center justify-between gap-6 sm:h-18">
-        <a href="/" className="leading-none text-white">
+        <a href="/" className="leading-none text-white [text-shadow:0_1px_6px_rgba(0,0,0,0.65)]">
           <span className="text-xl font-extrabold tracking-[0.2em]">CLIFFSIDE</span>
           <span className="sr-only">, home</span>
         </a>
 
-        <nav aria-label="Primary" className="hidden lg:block">
+        <nav aria-label="Primary" className={cn("hidden", (scrolled || solid) && "lg:block")}>
           <ul className="flex items-center gap-5">
             {nav.map((item) => (
               <li key={item.href}>
@@ -85,7 +88,10 @@ export function Header({ solid = false, current }: { solid?: boolean; current?: 
 
           <Dialog.Root open={open} onOpenChange={setOpen}>
             <Dialog.Trigger
-              className="-mr-2 grid size-11 place-items-center rounded-lg text-white hover:bg-white/10 lg:hidden"
+              className={cn(
+                "-mr-2 grid size-11 place-items-center rounded-lg bg-black/20 text-white hover:bg-black/35",
+                (scrolled || solid) && "lg:hidden",
+              )}
               aria-label="Open menu"
             >
               <Menu className="size-6" strokeWidth={1.5} />
