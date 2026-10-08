@@ -16,7 +16,9 @@ export function Hero() {
       </div>
 
       <Container className="py-12 text-center sm:py-16">
-        <p className="type-caption">{site.locationLine}</p>
+        <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
+          {site.locationLine}
+        </p>
         <h1 id="hero-title" className="type-title mx-auto mt-4 max-w-[20ch]">
           Your Blue Ridge cabin, above it all.
         </h1>
