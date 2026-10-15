@@ -58,9 +58,9 @@ export function Figure({
 /** One primary, one secondary, one text-link style, used everywhere. */
 export const button = {
   primary:
-    "inline-flex items-center justify-center rounded-lg bg-copper px-5 py-3 text-[0.9375rem] font-semibold text-white transition-colors hover:bg-copper-hover",
+    "inline-flex items-center justify-center rounded-lg bg-copper px-6 py-3.5 text-[1.0625rem] font-bold text-white transition-colors hover:bg-copper-hover",
   secondary:
-    "inline-flex items-center justify-center rounded-lg border border-forest px-5 py-3 text-[0.9375rem] font-semibold text-forest transition-colors hover:bg-forest hover:text-ivory",
+    "inline-flex items-center justify-center rounded-lg border border-forest px-6 py-3.5 text-[1.0625rem] font-bold text-forest transition-colors hover:bg-forest hover:text-ivory",
   link: "font-semibold underline decoration-2 underline-offset-4 transition-colors hover:decoration-copper",
 };
 

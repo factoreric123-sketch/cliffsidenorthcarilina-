@@ -1,4 +1,14 @@
-import { Bath, BedDouble, PawPrint, Users, Waves, type LucideIcon } from "lucide-react";
+import {
+  Bath,
+  BedDouble,
+  Flame,
+  Mountain,
+  PawPrint,
+  Users,
+  Waves,
+  Wifi,
+  type LucideIcon,
+} from "lucide-react";
 
 import { photos, type Photo } from "./photos";
 
@@ -206,6 +216,23 @@ export const finalCta = {
   title: "Ready for a mountain escape?",
   text: "Choose your dates on the Leatherwood Mountains booking site to check availability and pricing.",
 };
+
+/** The five amenities that set Cliffside apart, shown above the full list. */
+export const standoutAmenities: { Icon: LucideIcon; label: string; detail: string }[] = [
+  {
+    Icon: Mountain,
+    label: "Mountain views",
+    detail: "Long-range Blue Ridge views from the deck and porch.",
+  },
+  { Icon: Waves, label: "Private hot tub", detail: "On the covered porch, facing the mountains." },
+  { Icon: Flame, label: "Stone fireplace", detail: "A stone gas fireplace in the living room." },
+  { Icon: PawPrint, label: "Pet friendly", detail: "Up to 2 pets, $75 per pet." },
+  {
+    Icon: Wifi,
+    label: "High-speed Wi-Fi",
+    detail: "High-speed fiber optic connection.",
+  },
+];
 
 export const amenityHighlights = [
   "Private hot tub",

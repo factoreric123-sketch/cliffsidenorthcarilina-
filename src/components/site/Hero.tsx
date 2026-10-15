@@ -40,7 +40,7 @@ export function Hero() {
           {quickFacts.map(({ Icon, label }) => (
             <li
               key={label}
-              className="flex min-w-24 flex-col items-center gap-2 text-sm text-forest sm:flex-1 sm:border-r sm:border-stone sm:last:border-r-0"
+              className="flex min-w-24 flex-col items-center gap-2 text-base text-forest sm:flex-1 sm:border-r sm:border-stone sm:last:border-r-0"
             >
               <Icon className="size-7" strokeWidth={1.5} aria-hidden="true" />
               {label}
@@ -50,9 +50,9 @@ export function Hero() {
         <div className="mx-auto mt-8 max-w-3xl border-t border-stone pt-5">
           <a
             href="/#reviews"
-            className="inline-flex min-h-11 flex-wrap items-center justify-center gap-3 text-sm text-forest underline-offset-4 hover:underline"
+            className="inline-flex min-h-11 flex-wrap items-center justify-center gap-3 text-base text-forest underline-offset-4 hover:underline"
           >
-            <strong className="text-xl">{reviewSummary.score}</strong>
+            <strong className="font-display text-2xl font-semibold">{reviewSummary.score}</strong>
             <span>Guest rating · {reviewSummary.count} reviews</span>
           </a>
         </div>

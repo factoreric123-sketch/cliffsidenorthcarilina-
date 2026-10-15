@@ -1,13 +1,4 @@
-import {
-  ChevronDown,
-  Waves,
-  Mountain,
-  Flame,
-  Wifi,
-  Utensils,
-  PawPrint,
-  Expand,
-} from "lucide-react";
+import { ChevronDown, Expand } from "lucide-react";
 import { useState } from "react";
 
 import {
@@ -35,6 +26,7 @@ import {
   reviewSummary,
   site,
   slowingDown,
+  standoutAmenities,
 } from "@/content/site";
 import { cn } from "@/lib/utils";
 
@@ -54,22 +46,27 @@ export function BookButton({ className }: { className?: string }) {
 export function ReviewList({ className }: { className?: string }) {
   return (
     <div className={className}>
-      <p>
-        Rated <strong>{reviewSummary.score}</strong> from {reviewSummary.count} verified guest
-        reviews on{" "}
-        <a href={reviewSummary.url} className={cn(button.link, "text-forest decoration-stone")}>
-          {reviewSummary.source}
-        </a>
-        .
-      </p>
-      <ul className="mt-8 grid gap-x-10 gap-y-8 md:grid-cols-2">
+      <div className="flex flex-wrap items-end gap-x-5 gap-y-2">
+        <p className="font-display text-5xl leading-none font-semibold text-forest sm:text-6xl">
+          {reviewSummary.score.split(" ")[0]}
+          <span className="text-2xl text-muted-foreground sm:text-3xl">/10</span>
+        </p>
+        <p className="pb-1">
+          <span className="block font-bold text-forest">Exceptional</span>
+          {reviewSummary.count} verified guest reviews on{" "}
+          <a href={reviewSummary.url} className={cn(button.link, "text-forest decoration-stone")}>
+            {reviewSummary.source}
+          </a>
+        </p>
+      </div>
+      <ul className="mt-10 grid gap-x-12 gap-y-10 md:grid-cols-2">
         {reviews.map((r) => (
-          <li key={r.name} className="border-l-2 border-copper pl-5">
+          <li key={r.name} className="border-l-2 border-copper pl-5 sm:pl-6">
             <figure>
-              <blockquote className="text-xl leading-snug font-medium text-forest">
+              <blockquote className="max-w-[34ch] text-[1.375rem] leading-snug text-charcoal sm:text-2xl">
                 “{r.quote}”
               </blockquote>
-              <figcaption className="type-caption mt-3">
+              <figcaption className="mt-3 text-base text-muted-foreground">
                 {r.name} · {r.stay} · 10/10
               </figcaption>
             </figure>
@@ -160,7 +157,7 @@ export function ArrivalAndRules() {
 
 export function Intro() {
   return (
-    <section aria-labelledby="intro-title" className="py-12 sm:py-16">
+    <section aria-labelledby="intro-title" className="py-16 sm:py-24">
       <Container className="grid items-center gap-8 md:grid-cols-2 md:gap-12">
         <Figure photo={photos.exteriorFront} sizes="(min-width: 768px) 50vw, 100vw" />
         <div>
@@ -168,7 +165,7 @@ export function Intro() {
             <h2 id="intro-title" className="type-heading">
               {intro.title}
             </h2>
-            <p className="mt-5 text-lg leading-relaxed">{intro.text}</p>
+            <p className="mt-6 max-w-[62ch] text-lg leading-relaxed sm:text-xl">{intro.text}</p>
           </div>
           <div className="mt-10 border-t border-stone pt-5">
             <h3 className="type-label">Perfect for</h3>
@@ -202,7 +199,7 @@ export function Intro() {
 
 export function Reasons() {
   return (
-    <section aria-labelledby="reasons-title" className="bg-cream py-12 sm:py-16">
+    <section aria-labelledby="reasons-title" className="bg-cream py-16 sm:py-24">
       <Container>
         <h2 id="reasons-title" className="type-heading">
           Six reasons to book Cliffside
@@ -228,12 +225,12 @@ export function Reasons() {
 
 export function Reviews() {
   return (
-    <section id="reviews" aria-labelledby="reviews-title" className="py-12 sm:py-16">
+    <section id="reviews" aria-labelledby="reviews-title" className="py-16 sm:py-24">
       <Container>
         <h2 id="reviews-title" className="type-heading max-w-2xl">
           What guests love about Cliffside
         </h2>
-        <ReviewList className="mt-5" />
+        <ReviewList className="mt-8" />
         <BookButton className="mt-10" />
       </Container>
     </section>
@@ -268,7 +265,7 @@ export function CabinTour() {
   const [selected, setSelected] = useState<number | null>(null);
   const tourPhotos = [photos.hotTubView, photos.primarySuite, photos.livingFireplace];
   return (
-    <section id="cabin" aria-labelledby="cabin-title" className="pb-12 sm:pb-16">
+    <section id="cabin" aria-labelledby="cabin-title" className="pb-16 sm:pb-24">
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
@@ -312,7 +309,7 @@ export function CabinTour() {
           {[cabinTour[2]!, cabinTour[0]!, cabinTour[1]!].map((c) => (
             <div key={c.title}>
               <h3 className="type-subheading">{c.title}</h3>
-              <p className="mt-2 text-base">{c.text}</p>
+              <p className="mt-2 max-w-[60ch]">{c.text}</p>
             </div>
           ))}
         </div>
@@ -333,14 +330,14 @@ export function Leatherwood() {
     <section
       id="leatherwood"
       aria-labelledby="leatherwood-title"
-      className="bg-ivory py-12 sm:py-16"
+      className="bg-ivory py-16 sm:py-24"
     >
       <Container>
         <div className="max-w-2xl">
           <h2 id="leatherwood-title" className="type-heading">
             {leatherwood.title}
           </h2>
-          <p className="mt-5">{leatherwood.text}</p>
+          <p className="mt-6 max-w-[62ch]">{leatherwood.text}</p>
         </div>
         <ul className="mt-10 grid gap-x-6 gap-y-10 md:grid-cols-3">
           {leatherwood.cards.map((c) => (
@@ -361,7 +358,7 @@ export function Leatherwood() {
 
 export function Location() {
   return (
-    <section id="location" aria-labelledby="location-title" className="py-12 sm:py-16">
+    <section id="location" aria-labelledby="location-title" className="py-16 sm:py-24">
       <Container className="grid gap-8 lg:grid-cols-12 lg:gap-14">
         <div className="lg:col-span-6">
           <h2 id="location-title" className="type-heading">
@@ -385,7 +382,7 @@ export function Location() {
           </figcaption>
           <a
             href={site.mapsUrl}
-            className={cn(button.link, "mt-2 inline-flex min-h-11 items-center text-sm")}
+            className={cn(button.link, "mt-2 inline-flex min-h-11 items-center")}
           >
             Open the area map
           </a>
@@ -425,7 +422,7 @@ export function PhotoGallery() {
   const groups = galleryCategories.filter((c): c is GalleryCategory => c !== "All");
 
   return (
-    <section id="photos" aria-labelledby="photos-title" className="py-12 sm:py-16">
+    <section id="photos" aria-labelledby="photos-title" className="py-16 sm:py-24">
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-4">
           <h2 id="photos-title" className="type-heading">
@@ -469,34 +466,29 @@ export function PhotoGallery() {
 }
 
 export function Amenities() {
-  const essentials = [
-    { Icon: Waves, label: "Private hot tub" },
-    { Icon: Mountain, label: "Mountain views" },
-    { Icon: Flame, label: "Gas fireplace" },
-    { Icon: Wifi, label: "Fiber optic Wi-Fi" },
-    { Icon: Utensils, label: "Full kitchen" },
-    { Icon: PawPrint, label: "Pets welcome" },
-  ];
   return (
-    <section id="amenities" aria-labelledby="amenities-title" className="bg-cream py-12 sm:py-16">
+    <section id="amenities" aria-labelledby="amenities-title" className="bg-cream py-16 sm:py-24">
       <Container>
         <h2 id="amenities-title" className="type-heading">
           Everything you need to settle in
         </h2>
-        <ul className="mt-8 grid grid-cols-2 gap-x-6 gap-y-7 md:grid-cols-3">
-          {essentials.map(({ Icon, label }) => (
-            <li key={label} className="flex items-center gap-3 text-base font-semibold text-forest">
-              <Icon className="size-6 shrink-0" strokeWidth={1.5} aria-hidden="true" />
-              {label}
+        <ul className="mt-10 grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-5">
+          {standoutAmenities.map(({ Icon, label, detail }) => (
+            <li key={label} className="flex gap-4 lg:flex-col lg:gap-3">
+              <Icon className="size-8 shrink-0 text-forest" strokeWidth={1.5} aria-hidden="true" />
+              <div>
+                <h3 className="text-lg leading-snug font-bold text-forest">{label}</h3>
+                <p className="mt-1 text-base text-muted-foreground">{detail}</p>
+              </div>
             </li>
           ))}
         </ul>
-        <details className="group mt-8 border-t border-stone pt-4">
-          <summary className="inline-flex min-h-11 cursor-pointer items-center gap-2 font-semibold text-forest">
+        <details className="group mt-12 border-t border-stone pt-4">
+          <summary className="inline-flex min-h-11 cursor-pointer items-center gap-2 text-lg font-bold text-forest">
             All amenities
-            <ChevronDown className="size-4 group-open:rotate-180" aria-hidden="true" />
+            <ChevronDown className="size-5 group-open:rotate-180" aria-hidden="true" />
           </summary>
-          <div className="mt-5">
+          <div className="mt-6">
             <AmenityList />
           </div>
         </details>
@@ -507,29 +499,31 @@ export function Amenities() {
 
 export function PlanStay() {
   return (
-    <section id="faq" aria-labelledby="plan-title" className="bg-cream py-12 sm:py-16">
+    <section id="faq" aria-labelledby="plan-title" className="bg-cream py-16 sm:py-24">
       <Container className="grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-14">
         <div>
           <p className="type-label mb-2">THE PRACTICAL DETAILS</p>
           <h2 id="plan-title" className="type-heading">
             Plan your stay
           </h2>
-          <p className="mt-4">Four guests. Two bedrooms. Pets welcome.</p>
+          <p className="mt-5">Four guests. Two bedrooms. Pets welcome.</p>
           <p className="type-caption mt-3">Check-in after 4 PM · Check-out before 11 AM</p>
         </div>
         <Accordion type="single" collapsible className="border-t border-stone">
           <AccordionItem value="pets">
-            <AccordionTrigger className="text-base text-forest">Bringing a pet</AccordionTrigger>
-            <AccordionContent className="text-base">
+            <AccordionTrigger className="py-4 text-[1.0625rem] font-bold text-forest sm:text-lg">
+              Bringing a pet
+            </AccordionTrigger>
+            <AccordionContent className="text-[1.0625rem] sm:text-lg">
               <p>{pets.text}</p>
               <p className="mt-3 font-semibold">{pets.fee}</p>
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="arrival" id="rules">
-            <AccordionTrigger className="text-base text-forest">
+            <AccordionTrigger className="py-4 text-[1.0625rem] font-bold text-forest sm:text-lg">
               Arrival and house rules
             </AccordionTrigger>
-            <AccordionContent className="text-base">
+            <AccordionContent className="text-[1.0625rem] sm:text-lg">
               <div className="space-y-3">
                 {arrival.map((p) => (
                   <p key={p}>{p}</p>
@@ -549,10 +543,10 @@ export function PlanStay() {
             )
             .map((f) => (
               <AccordionItem key={f.q} value={f.q}>
-                <AccordionTrigger className="text-left text-base text-forest">
+                <AccordionTrigger className="py-4 text-left text-[1.0625rem] font-bold text-forest sm:text-lg">
                   {f.q}
                 </AccordionTrigger>
-                <AccordionContent className="text-base">{f.a}</AccordionContent>
+                <AccordionContent className="text-[1.0625rem] sm:text-lg">{f.a}</AccordionContent>
               </AccordionItem>
             ))}
         </Accordion>
@@ -563,7 +557,7 @@ export function PlanStay() {
 
 export function Arrival() {
   return (
-    <section id="rules" aria-labelledby="rules-title" className="py-12 sm:py-16">
+    <section id="rules" aria-labelledby="rules-title" className="py-16 sm:py-24">
       <Container>
         <h2 id="rules-title" className="type-heading">
           Arrival and house rules
@@ -578,7 +572,7 @@ export function Arrival() {
 
 export function Faq() {
   return (
-    <section id="faq" aria-labelledby="faq-title" className="bg-cream py-12 sm:py-16">
+    <section id="faq" aria-labelledby="faq-title" className="bg-cream py-16 sm:py-24">
       <Container className="grid gap-8 lg:grid-cols-12 lg:gap-14">
         <h2 id="faq-title" className="type-heading lg:col-span-4">
           Before you book
@@ -607,7 +601,7 @@ export function FinalCta() {
         </h2>
         <p className="mt-4 text-lg">{finalCta.text}</p>
         <BookButton className="mt-8" />
-        <p className="mt-4 text-sm text-ivory/75">{site.bookingNote}</p>
+        <p className="mt-4 text-base text-ivory/80">{site.bookingNote}</p>
       </Container>
     </section>
   );
