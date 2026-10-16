@@ -21,7 +21,7 @@ const cabin = (n: string) => `${LOCAL_PREFIX}${n}`;
 export const photos = {
   // Owner-supplied hero photograph; no generated imagery.
   sunsetHotTub: {
-    src: cabin("sunset-hot-tub"),
+    src: cabin("hot-tub-sunset"),
     alt: "Hot tub on the covered deck overlooking mountain ridges at sunset",
     category: "Outdoor living",
   },

@@ -11,7 +11,7 @@ export function Hero() {
         <Img
           photo={photos.sunsetHotTub}
           priority
-          className="object-[62%_center] sm:object-center"
+          className="object-[72%_center] sm:object-center"
         />
       </div>
 
